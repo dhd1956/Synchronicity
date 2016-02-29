@@ -21,6 +21,7 @@ import com.mind.oceanic.the.synchronicity.event.EventListActivity;
 import com.mind.oceanic.the.synchronicity.event.UpdateEventActivity;
 import com.mind.oceanic.the.synchronicity.model.Event;
 import com.mind.oceanic.the.synchronicity.model.SynchItem;
+import com.mind.oceanic.the.synchronicity.model.SynchItemEvent;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,17 +36,22 @@ import java.util.Locale;
 public class MaintainSynchronicityActivity extends Activity implements View.OnClickListener {
 
     SynchItem synchItem;
+    SynchItem si;
     SynchronicityDataSource datasource;
     protected long synchId;
-    protected String synchDate;
+    protected String synchDate="";
+    protected int synchRating;
     protected String synchSummary;
     protected String synchDetails;
+
     Event event;
     List<Event> events;
     protected long eventId = -1;
+    protected long leftEventId = -1;
+    protected long rightEventId = -1;
     protected String eventSummary;
     protected String eventDetails;
-    protected String eventDate;
+    protected String eventDate=null;
     private EditText etDate;
     private TextView tvSummary;
     private TextView tvDetails;
@@ -60,22 +66,43 @@ public class MaintainSynchronicityActivity extends Activity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.maintain_synch);
         Bundle b = getIntent().getExtras();
-        synchItem = b.getParcelable(".model.SynchItem");
-        dateFormatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.US);
+//        synchItem = b.getParcelable(".model.SynchItem");
+        dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         synchId = b.getLong("Id");
+        synchDate = b.getString("Date");
+        Log.i("dolphin","   the datesynch is "+synchDate);
         synchSummary = b.getString("Summary");
         synchDetails = b.getString("Details");
+        String flag = b.getString("Flag");
         datasource = new SynchronicityDataSource(this);
         datasource.open();
+        Log.i("dolphin", "eventId from start of mainain=" + flag);
 
-        Log.i("dolphin", "maintina start=" + synchSummary + "  AND " + synchDetails+"  and "+synchId);
-
-        Log.i("dolphin", "detail is coming into maintain="+synchDetails);
-        setEventList();
-//        ET_DATE = (EditText) findViewById(R.id.txt_synch_date);
+        if (flag.equals("set")) {
+            //check if synch events are already linked
+            SynchItem synchItem = new SynchItem();
+            synchItem = datasource.create(synchItem);
+            synchId = synchItem.getSynchId();
+            Log.i("dolphin", "maintina start=" + synchSummary + "  AND " + synchDetails + "  and " + synchId);
+            leftEventId = b.getLong("leftEventId");
+            event = datasource.findEvent(leftEventId);
+            linkEvent(synchId,leftEventId);
+            showEvent(synchId,leftEventId);
+            rightEventId = b.getLong("rightEventId");
+            event = datasource.findEvent(rightEventId);
+            linkEvent(synchId,rightEventId);
+            showEvent(synchId,rightEventId);
+        }
+        tvSummary = (TextView) findViewById(R.id.lbl_synch_summary);
+        etDate = (EditText) findViewById(R.id.txt_synch_date);
+        tvDetails = (TextView) findViewById(R.id.lbl_synch_details);
+        lstEvents = (ListView) findViewById(R.id.lst_events);
+        if (synchId != -1) {
+            setEventList();
+            Log.i("dolphin", "detail is coming into maintain=");//+ synchDetails);
+            setSynchInfo();
+        }
         setDateTimeField();
-//        setFilterList();
-        setSynchInfo();
         tvSummary.setOnClickListener(new View.OnClickListener() {
                                          @Override
                                          public void onClick(View v) {
@@ -91,6 +118,15 @@ public class MaintainSynchronicityActivity extends Activity implements View.OnCl
                                          }
                                      }
         );
+        Button btnLinkEvent = (Button) findViewById(R.id.btn_link_event);
+        btnLinkEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                synchId = -1;
+                eventId = -1;
+                linkEvents();
+            }
+        });
         Button btnNewEvent = (Button) findViewById(R.id.btn_new_event);
         btnNewEvent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +140,21 @@ public class MaintainSynchronicityActivity extends Activity implements View.OnCl
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                synchDate = etDate.getText().toString();
+                Log.i("dolphin","  saving with this etdate "+synchDate);
+                SynchItem synchItem = new SynchItem();
+                synchItem.setSynchId(synchId);
+                synchItem.setSynchDate(etDate.getText().toString());
+                synchItem.setSynchSummary(tvSummary.getText().toString());
+                synchItem.setSynchDetails(tvDetails.getText().toString());
+                synchItem.setSynchRating(synchRating);
+                if (synchId == -1) {
+                    Log.i("dolphinv","saving new");
+                    SaveNew(synchItem);
+                } else {
+                    Log.i("dolphinv","saving existing");
+                    SaveExisting(synchItem);
+                }
                 finish();
             }
         });
@@ -118,6 +169,7 @@ public class MaintainSynchronicityActivity extends Activity implements View.OnCl
     private void getUpdate() {
         Intent intent = new Intent(MaintainSynchronicityActivity.this,UpdateSynchDetailActivity.class);
         if (synchId == -1) {
+
             synchDate = "";
             synchSummary = "";
             synchDetails = "";
@@ -138,28 +190,56 @@ public class MaintainSynchronicityActivity extends Activity implements View.OnCl
 
         }
         Intent intent2 = new Intent(MaintainSynchronicityActivity.this,UpdateEventActivity.class);
-        intent2.putExtra("SynchId",synchId);
-        intent2.putExtra("EventId",eventId);
+        intent2.putExtra("SynchId", synchId);
+        intent2.putExtra("EventId", eventId);
         intent2.putExtra("EventSummary", eventSummary);
         intent2.putExtra("EventDetails",eventDetails);
-        intent2.putExtra("EventDate",eventDate);
+        intent2.putExtra("EventDate", eventDate);
         startActivityForResult(intent2,2);
 
     }
+    private void linkEvents() {
+        if (eventId == -1) {
+            eventDate = "";
+            eventSummary = "";
+            eventDetails = "";
+
+        }
+        Intent intent2 = new Intent(MaintainSynchronicityActivity.this,EventListActivity.class);
+        intent2.putExtra("EventSource","Synch");
+        intent2.putExtra("SynchId", synchId);
+        intent2.putExtra("EventId", eventId);
+        intent2.putExtra("EventSummary", eventSummary);
+        intent2.putExtra("EventDetails",eventDetails);
+        intent2.putExtra("EventDate", eventDate);
+        startActivityForResult(intent2,5);
+
+    }
     private void setDateTimeField() {
-        lstEvents = (ListView) findViewById(R.id.lst_events);
+        Log.i("dolphin", "setdatetimefiled");
+
         etDate = (EditText) findViewById(R.id.txt_synch_date);
+        Log.i("dolphinoo","synchDate is "+synchDate);
         etDate.setInputType(InputType.TYPE_NULL);
         etDate.requestFocus();
         etDate.setOnClickListener(this);
-
-        Log.i("dolphin", "setdatetimefiled");
+        etDate.setText(synchDate);
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-            entryDate = df.format(c.getTime());
+        entryDate = df.format(c.getTime());
+        Log.i("dolphin","entryDate is before in date setting as "+entryDate);
+        Log.i("dolphin","s dt is before in date setting as "+synchDate);
+        if (synchDate != null && synchDate.length()>3) {
+            Log.i("dolphin","synchDate is in date setting as "+synchDate);
+            etDate.setText(synchDate);
+        } else {
+            Log.i("dolphin","entryDate is in date setting as "+entryDate);
+            etDate.setText(entryDate);
+        }
 
-        etDate.setText(entryDate);
+
+
         Calendar newCalendar = Calendar.getInstance();
         datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
 
@@ -168,10 +248,27 @@ public class MaintainSynchronicityActivity extends Activity implements View.OnCl
                 newDate.set(year, monthOfYear, dayOfMonth);
 
                 etDate.setText(dateFormatter.format(newDate.getTime()));
+//                synchDate = etDate.getText().toString();dd
             }
 
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
     }
+    public void setSynchInfo() {
+        Log.i("dolphin", "setting text id=" + synchId);
+
+//        Log.i("dolphin", "setting next details=" + synchDetails);
+//        tvSummary = (TextView) findViewById(R.id.lbl_synch_summary);
+//        etDate = (EditText) findViewById(R.id.txt_synch_date);
+//        tvDetails = (TextView) findViewById(R.id.lbl_synch_details);
+        synchItem = datasource.find(synchId);
+        etDate.setText(synchItem.getSynchDate());
+        synchDate = etDate.getText().toString();
+        Log.i("dolphin","in setsynchinfo synchDate = "+synchDate);
+
+        tvSummary.setText(synchItem.getSynchSummary());
+        tvDetails.setText(synchItem.getSynchDetails());
+    }
+
     @Override
     public void onClick(View view) {
         if(view == etDate) {
@@ -187,24 +284,8 @@ public class MaintainSynchronicityActivity extends Activity implements View.OnCl
             intent3.putExtra("EventDetails",eventDetails);
             intent3.putExtra("EventDate",eventDate);
             startActivityForResult(intent3,3);
-//        } else if(view == bCalc) {
-//            calculateStoreToShop();
-//                } else if(view == lvl1) {
-//                    Log.i("dolphinp","show"+fromDateEtxt.getText().toString());
-//                    fromDateEtxt.setText(lvl1.getItemAtPosition(lvl1.getSelectedItemPosition()).toString());
         }
-        Log.i("dolphinp","after new show=");
-    }
-
-    public void setSynchInfo() {
-        Log.i("dolphin", "setting text id=" + synchId);
-
-        synchItem = datasource.find(synchId);
-        Log.i("dolphin", "setting next details=" + synchDetails);
-        tvSummary = (TextView) findViewById(R.id.lbl_synch_summary);
-        tvDetails = (TextView) findViewById(R.id.lbl_synch_details);
-        tvSummary.setText(synchItem.getSynchSummary());
-        tvDetails.setText(synchItem.getSynchDetails());
+        Log.i("dolphinp", "after new show=");
     }
 
     public void setEventList() {
@@ -214,7 +295,7 @@ public class MaintainSynchronicityActivity extends Activity implements View.OnCl
         ArrayAdapter<Event> adapter = new ArrayAdapter<Event>(MaintainSynchronicityActivity.this,
                 android.R.layout.simple_list_item_1, events);
         lst1.setAdapter(adapter);
-        Log.i("dolphino", "seteventlist ");
+        Log.i("dolphino", "seteventlist "+synchId);
         lst1.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
 
@@ -229,65 +310,43 @@ public class MaintainSynchronicityActivity extends Activity implements View.OnCl
                         if (event.getEventSummary() != null) {
                             eventSummary = event.getEventSummary();
                         }
-
-                        eventDetails = event.getEventDetails();
-                        Intent intent2 = new Intent(MaintainSynchronicityActivity.this, UpdateEventActivity.class);
-                        intent2.putExtra("SynchId", synchId);
-                        intent2.putExtra("EventId", event.getEventId());
-                        intent2.putExtra("EventSummary", event.getEventSummary());
-                        intent2.putExtra("EventDetails", event.getEventDetails());
-                        Log.i("dolphin", "in click of list=" + event.getEventDetails());
-                        startActivityForResult(intent2, 2);
+                        showEvent(synchId, eventId);
                     }
                 }
         );
+        Log.i("dolphin", "seteventlist bottom");
     }
 
+    protected void linkEvent(long synchId, long eventId) {
+        Log.i("dolphin", "showevent");
+        SynchItemEvent synchItemEvent = new SynchItemEvent();
+        synchItemEvent.setSeSynchId(synchId);
+        synchItemEvent.setSeEventId(eventId);
+        Log.i("dolphinv", "Item crated synchId=" + synchId + "  eventid=" + eventId);
+        datasource.create(synchItemEvent);
+        eventDetails = event.getEventDetails();
+    }
 
-    protected void setFilterList() {
-
-
-        ListView l = (ListView) findViewById(R.id.lst_event_filters);
-        String[] values = new String[] { "Show Selected", "Show All", "Show Unselected"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MaintainSynchronicityActivity.this,
-                android.R.layout.simple_list_item_1, values);
-        l.setAdapter(adapter);
-
-
-//        final ListView lst1 = (ListView) findViewById(R.id.lst_synch_summary);
-//        ArrayAdapter<SynchItem> adapter = new ArrayAdapter<SynchItem>(this,
-//                android.R.layout.simple_list_item_1, synchItems);
-//        lst1.setAdapter(adapter);
-
-//
-//        lstFilter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, final View view,
-//                                    int position, long id) {
-//                final String item = (String) parent.getItemAtPosition(position);
-//                view.animate().setDuration(2000).alpha(0)
-//                        .withEndAction(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                list.remove(item);
-////                                adapter.notifyDataSetChanged();
-//                                view.setAlpha(1);
-//                            }
-//                        });
-//            }
-
-//        });
-
+    protected void showEvent(long synchId, long eventId) {
+        Intent intent2 = new Intent(MaintainSynchronicityActivity.this, UpdateEventActivity.class);
+        intent2.putExtra("SynchId", synchId);
+        intent2.putExtra("EventId", event.getEventId());
+        intent2.putExtra("EventSummary", event.getEventSummary());
+        intent2.putExtra("EventDetails", event.getEventDetails());
+        intent2.putExtra("EventDate",event.getEventDate());
+        Log.i("dolphin", "in click of list=" + event.getEventDetails());
+        startActivityForResult(intent2, 2);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("dolphin", "onresume in maintainsynch");
-
-        setSynchInfo();
-        setEventList();
+        if (synchId != -1) {
+            Log.i("dolphin", "onresume in maintainsynch  "+synchId);
+            setEventList();
+            setSynchInfo();
+        }
+        setDateTimeField();
     }
 
     @Override
@@ -295,22 +354,35 @@ public class MaintainSynchronicityActivity extends Activity implements View.OnCl
     {
         super.onActivityResult(requestCode, resultCode, data);
         // check if the request code is same as what is passed  here it is 2
-        Log.i("dolphin","onactivityresulttop"+requestCode);
+        Log.i("dolphin", "onactivityresulttop" + requestCode);
         if(requestCode==1)
         {
             synchId=data.getLongExtra("SynchId",2);
             Log.i("dolphin","synchid from above"+synchId);
+        } else if (requestCode == 5) {
+
         }
     }
 
-//    @Override
-//    protected void onStop() {
-//
-//        Log.i("dolphin","save and stop");
-//        if (datasource.addSynchItem(synchItem)) {
-//        }
-//
-//        super.onStop();
-//        finish();
-//    }
+    protected boolean SaveNew(SynchItem synchItem) {
+        Log.i("dolphinv", "Item added");
+        if (datasource.add(synchItem)) {
+            synchId = synchItem.getSynchId();
+            return true;
+        } else {
+            Log.i("dolphinv", "ID not added");
+            return false;
+        }
+
+    }
+
+    protected boolean SaveExisting(SynchItem synchItem) {
+        Log.i("dolphinu","saveexisting");
+        if (datasource.update(synchItem)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 }

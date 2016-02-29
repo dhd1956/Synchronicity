@@ -24,12 +24,26 @@
         <activity android:name=".synch.SynchListActivity"/>
 <activity android:name=".synch.MaintainSynchronicityActivity" />
 <activity
-android:windowSoftInputMode="stateVisible"
+        android:name=".event.EventNotesActivity" />
+        <activity
+    android:windowSoftInputMode="stateVisible"
 android:name=".synch.UpdateSynchDetailActivity" />
         <activity android:name=".event.EventListActivity" />
 <activity
 android:name=".match.MatchKeywordsActivity"
     />
+        <activity
+            android:name=".note.VerbActivity"
+            />
+        <activity
+            android:name=".note.ThingActivity"
+            />
+        <activity
+            android:name=".note.ContactsActivity"
+            />
+        <activity
+            android:name=".note.CalendarActivity"
+            />
 <activity
 android:windowSoftInputMode="stateVisible"
 android:name=".event.UpdateEventActivity"

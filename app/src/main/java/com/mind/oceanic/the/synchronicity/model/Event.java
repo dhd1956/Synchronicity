@@ -2,7 +2,10 @@ package com.mind.oceanic.the.synchronicity.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -48,7 +51,27 @@ public class Event implements Parcelable {
 
     @Override
     public String toString() {
-        return eventSummary;
+        String _Date = "2010-09-29 08:45:22";
+        if (eventSummary.equals(null)) {
+            return "null";
+        } else {
+//            Date date = new Date();
+////            SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+//            SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
+//            Log.i("dolphin","eventdate prob="+eventDate);
+//            _Date = eventDate + " 08:45:22";
+//            try {
+//                date = fmt.parse(_Date);
+//                Log.i("dolphin","sturpid date="+date);
+//            } catch (ParseException pe) {
+//                Log.i("dolphin", "date problem"+eventDate);
+//            }
+//            SimpleDateFormat fmtOut = new SimpleDateFormat("yyyy-MM-dd");
+//            return fmtOut.format(date) +"\n"+eventSummary;
+
+//            return theDate + "\n" + eventSummary;
+            return eventDate + "\n" + eventSummary;
+        }
     }
 
     public Event() {

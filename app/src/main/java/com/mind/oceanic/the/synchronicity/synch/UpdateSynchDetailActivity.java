@@ -22,6 +22,7 @@ public class UpdateSynchDetailActivity extends Activity {
 
     SynchronicityDataSource datasource;
     long synchItemId = -1;
+    String synchItemDate = "";
     String synchItemSummary = "";
     String synchItemDetails = "";
     boolean newItem = false;
@@ -48,6 +49,7 @@ public class UpdateSynchDetailActivity extends Activity {
         if (synchItemId == -1) {
             newItem = true;
         }
+        synchItemDate = b.getString("Date");
         synchItemSummary = b.getString("Summary");
         synchItemDetails = b.getString("Details");
         ET_SUMMARY = (EditText) findViewById(R.id.txt_synch_summary);
@@ -63,12 +65,13 @@ public class UpdateSynchDetailActivity extends Activity {
                                           SynchItem synchItem = new SynchItem();
                                           if (!newItem) {
                                               synchItem.setSynchId(synchItemId);
+                                              synchItem.setSynchDate(synchItemDate);
                                               synchItem.setSynchSummary(synchItemSummary);
                                               synchItem.setSynchDetails(synchItemDetails);
                                           }
                                           synchItem.setSynchSummary(ET_SUMMARY.getText().toString());
                                           synchItem.setSynchDetails(ET_DETAILS.getText().toString());
-                                          Log.i("dolphiny", "setdetail=" + synchItemDetails);
+                                          Log.i("dolphiny", "setdetail=" + synchItem.getSynchDetails());
 
                                           if (newItem) {
                                               Log.i("dolphinv","saving new");

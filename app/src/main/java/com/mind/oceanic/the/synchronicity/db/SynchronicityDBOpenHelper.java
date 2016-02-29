@@ -11,7 +11,7 @@ import android.util.Log;
 public class SynchronicityDBOpenHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "Synchronicity.db";
-    public static final int DATABASE_VERSION = 8;
+    public static final int DATABASE_VERSION = 16;
 
     public static final String TABLE_SYNCH_ITEMS = "synchItems";
     public static final String COLUMN_SYNCH_ID = "synchId";
@@ -52,6 +52,7 @@ public class SynchronicityDBOpenHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PLACE_ADDRESS = "placeAddress";
     public static final String COLUMN_PLACE_CITY = "placeCity";
     public static final String COLUMN_PLACE_PROVINCE = "placeProvince";
+    public static final String COLUMN_PLACE_COUNTRY = "placeCountry";
 
     public static final String TABLE_THINGS = "things";
     public static final String COLUMN_THING_ID = "thingId";
@@ -63,6 +64,14 @@ public class SynchronicityDBOpenHelper extends SQLiteOpenHelper {
     public static final String COLUMN_VERB_NAME = "verbName";
     public static final String COLUMN_VERB_APPLIES_TO = "verbAppliesTo";
 
+    public static final String TABLE_IGNORES = "ignores";
+    public static final String COLUMN_WORD = "word";
+
+    public static final String TABLE_NOTES = "notes";
+    public static final String COLUMN_NOTE_ID = "noteId";
+    public static final String COLUMN_FK_EVENT_ID = "fkEventId";
+    public static final String COLUMN_NOTE_PERSON = "notePerson";
+    public static final String COLUMN_NOTE_INFO = "noteInfo";
 
     private static final String TABLE_SYNCH_ITEMS_CREATE =
             "CREATE TABLE " + TABLE_SYNCH_ITEMS + " (" +
@@ -87,12 +96,11 @@ public class SynchronicityDBOpenHelper extends SQLiteOpenHelper {
                     "PRIMARY KEY ("+COLUMN_SE_SYNCH_ID+", "+COLUMN_SE_EVENT_ID+")"+
                     ")";
 
-
-    private static final String TABLE_EVENT_FILTERS_CREATE =
-            "CREATE TABLE " + TABLE_EVENT_FILTERS + " (" +
-                    COLUMN_SYNCH_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COLUMN_SYNCH_SUMMARY + " TEXT, " +
-                    COLUMN_SYNCH_DETAILS + " TEXT " +
+    private static final String TABLE_VERBS_CREATE =
+            "CREATE TABLE " + TABLE_VERBS + " (" +
+                    COLUMN_VERB_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_VERB_NAME + " TEXT, " +
+                    COLUMN_VERB_APPLIES_TO + " TEXT " +
                     ")";
 
     private static final String TABLE_PERSONS_CREATE =
@@ -115,7 +123,9 @@ public class SynchronicityDBOpenHelper extends SQLiteOpenHelper {
                     COLUMN_PLACE_EMAIL + " TEXT, " +
                     COLUMN_PLACE_MAIN_PHONE + " TEXT, " +
                     COLUMN_PLACE_ADDRESS + " TEXT, " +
-                    COLUMN_PLACE_MAIN_PHONE + " TEXT " +
+                    COLUMN_PLACE_CITY + " TEXT, " +
+                    COLUMN_PLACE_PROVINCE + " TEXT, " +
+                    COLUMN_PLACE_COUNTRY + " TEXT " +
                     ")";
 
     private static final String TABLE_THINGS_CREATE =
@@ -125,6 +135,17 @@ public class SynchronicityDBOpenHelper extends SQLiteOpenHelper {
                     COLUMN_THING_USE + " TEXT " +
                     ")";
 
+    private static final String TABLE_IGNORES_CREATE =
+            "CREATE TABLE " + TABLE_IGNORES + " (" +
+                    COLUMN_WORD + " STRING PRIMARY KEY)";
+
+    private static final String TABLE_NOTES_CREATE =
+            "CREATE TABLE " + TABLE_NOTES + " (" +
+                    COLUMN_NOTE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_FK_EVENT_ID + " INTEGER, " +
+                    COLUMN_NOTE_PERSON + " TEXT, " +
+                    COLUMN_NOTE_INFO + " TEXT )";
+
     public SynchronicityDBOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -132,17 +153,30 @@ public class SynchronicityDBOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db){
         Log.i("dolphinv", "prior created synchItem table");
-        db.execSQL(TABLE_SYNCH_ITEMS_CREATE);
-        db.execSQL(TABLE_EVENTS_CREATE);
-        db.execSQL(TABLE_SYNCH_ITEM_EVENTS_CREATE);
-        Log.i("dolphinv", "created synchItem table");
+//        db.execSQL(TABLE_SYNCH_ITEMS_CREATE);
+//        db.execSQL(TABLE_EVENTS_CREATE);
+////        db.execSQL(TABLE_SYNCH_ITEM_EVENTS_CREATE);
+        db.execSQL(TABLE_IGNORES_CREATE);
+        db.execSQL(TABLE_PERSONS_CREATE);
+        db.execSQL(TABLE_NOTES_CREATE);
+//        Log.i("dolphinv", "created synchItem table");
+        db.execSQL(TABLE_PLACES_CREATE);
+        db.execSQL(TABLE_THINGS_CREATE);
+        db.execSQL(TABLE_VERBS_CREATE);
     }
 
     @Override
     public void onUpgrade (SQLiteDatabase db,int oldVersion, int newVersion){
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SYNCH_ITEMS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SYNCH_ITEM_EVENTS);
+//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SYNCH_ITEMS);
+//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
+//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SYNCH_ITEM_EVENTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_IGNORES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PERSONS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLACES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_THINGS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_VERBS);
+        Log.i("dolphin","dropping");
         onCreate(db);
 
         Log.i("dolphinv", "Database has been upgraded from " +

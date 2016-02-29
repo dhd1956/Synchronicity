@@ -5,69 +5,74 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
-    <EditText
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="5dp"
-        android:id="@+id/txt_start_date"
-        />
-
-    <EditText
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="5dp"
-        android:id="@+id/txt_end_date"
-        android:layout_toRightOf="@+id/txt_start_date"
-        />
 
     <TextView
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_margin="5dp"
         android:id="@+id/lbl_match_word"
-        android:layout_below="@+id/txt_start_date"
+        />
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:inputType="textMultiLine"
+        android:id="@+id/lbl_left_event_details"
+        android:layout_below="@+id/lbl_match_word"
+
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:layout_marginTop="10dp"
+        android:inputType="textMultiLine"
+        android:id="@+id/lbl_right_event_details"
+        android:layout_below="@+id/lbl_left_event_details"
         />
 
     <Button
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
         android:text="Ignore"
         android:id="@+id/btn_ignore"
-        android:layout_below="@+id/lbl_match_word"
+        android:layout_below="@+id/lbl_right_event_details"
         android:layout_alignParentLeft="true" />
 
     <Button
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
         android:text="Match"
         android:id="@+id/btn_match"
-        android:layout_below="@+id/btn_ignore"
-        android:layout_alignParentLeft="true"  />
+        android:layout_below="@+id/lbl_right_event_details"
+        android:layout_toRightOf="@+id/btn_ignore" />
 
     <Button
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
         android:text="Pass"
         android:id="@+id/btn_pass"
-        android:layout_below="@+id/btn_match"
-        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/lbl_right_event_details"
+        android:layout_toRightOf="@+id/btn_match"
         />
 
-    <TextView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:inputType="textMultiLine"
-        android:id="@+id/txt_event_details"
-        android:layout_toRightOf="@+id/lbl_match_word"
-        android:layout_below="@+id/txt_start_date"
+    <Button
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:text="Return"
+        android:id="@+id/btn_return"
+        android:layout_below="@+id/lbl_right_event_details"
+        android:layout_toRightOf="@+id/btn_pass"
         />
 
-    <ListView
-        android:layout_width="1000dp"
-        android:layout_height="200dp"
-        android:id="@+id/lst_synch_summary"
-        android:layout_below="@+id/txt_end_date"
-        android:layout_toRightOf="@+id/txt_event_details"
-        />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView"
+        android:layout_alignTop="@+id/lbl_right_event_details"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

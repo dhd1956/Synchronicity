@@ -15,13 +15,19 @@
 
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="910px"
+        android:layout_height="820px"
         android:id="@+id/lst_synch_summary"
         android:layout_below="@+id/btn_create_new"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="Return"
+        android:id="@+id/btn_return"
+        android:layout_below="@+id/lst_synch_summary"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

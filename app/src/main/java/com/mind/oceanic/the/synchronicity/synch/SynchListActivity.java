@@ -1,5 +1,7 @@
 package com.mind.oceanic.the.synchronicity.synch;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +26,7 @@ public class SynchListActivity extends Activity implements View.OnClickListener 
     SynchronicityDataSource datasource;
     SynchItem synchItem;
     long synchId = -1;
+    String synchDate = null;
     String synchSummary = null;
     String synchDetails = null;
     int position;
@@ -42,16 +45,27 @@ public class SynchListActivity extends Activity implements View.OnClickListener 
         setList();
 
         Button btn_create_view = (Button) findViewById(R.id.btn_create_new);
+        Button btnReturn = (Button) findViewById(R.id.btn_return);
+
+        btnReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+                    public void onClick(View v2) {
+                finish();
+            }
+        });
 
         btn_create_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v2) {
                 Intent intent = new Intent(SynchListActivity.this, MaintainSynchronicityActivity.class);
+                synchDate = null;
                 synchSummary = null;
                 synchDetails = null;
                 intent.putExtra("Id", synchId);
+                intent.putExtra("Date",synchDate);
                 intent.putExtra("Summary", synchSummary);
                 intent.putExtra("Detail", synchDetails);
+                intent.putExtra("Flag","Reset");
                 Log.i("dolphin", "still alive");
                 startActivityForResult(intent, 1);
 
@@ -142,29 +156,69 @@ public class SynchListActivity extends Activity implements View.OnClickListener 
                                             int position, long id) {
                         synchItem = synchItems.get(position);
                         synchId = synchItem.getSynchId();
-                        Log.i("dolphin","there is a house in new "+synchId);
+                        Log.i("dolphin", "there is a house in new " + synchId);
                         Log.i("dolphin", "before summary");
                         if (synchItem.getSynchSummary() != null) {
                             synchSummary = synchItem.getSynchSummary().toString();
                         }
                         Log.i("dolphin", "after summary");
-
+                        synchDate = synchItem.getSynchDate();
                         synchDetails = synchItem.getSynchDetails().toString();
                         Intent intent2 = new Intent(SynchListActivity.this, MaintainSynchronicityActivity.class);
 //                        intent2.putExtra("Id", synchItem.getSynchId());
                         intent2.putExtra("Id", synchId);
+                        intent2.putExtra("Date", synchDate);
                         intent2.putExtra("Summary", synchItem.getSynchSummary());
                         intent2.putExtra("Details", synchItem.getSynchDetails());
-                        Log.i("dolphin", "in click of list="+synchItem.getSynchDetails());
+                        long eventId = -1;
+                        intent2.putExtra("Flag", "Reset");
+                        Log.i("dolphin", "in click of list=" + synchItem.getSynchDetails());
                         startActivityForResult(intent2, 2);
                     }
                 }
         );
+        lst1.setOnItemLongClickListener(new ListView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                SynchItem synchItem = new SynchItem();
+                synchItem = synchItems.get(position);
+                synchId = synchItem.getSynchId();
+//                Log.i("dolphin", "deleting=" + synchId + synchItem.getVerbName());
+                if (okCancelSynchAlert()) {
+                }
+                return true;
+            }
+        });
     }
     @Override
     protected void onResume() {
         super.onResume();
         synchId = -1;
         setList();
+    }
+
+    protected boolean okCancelSynchAlert(){
+
+
+        AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(SynchListActivity.this);
+        myAlertDialog.setTitle("Delete");
+        myAlertDialog.setMessage("Press Ok to delete");
+        myAlertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface arg0, int arg1) {
+                // do something when the OK button is clicked
+                datasource.deleteSynchItem(synchId);
+                datasource.deleteSynchEventSynchOrphans(synchId);
+                setList();
+            }
+        });
+        myAlertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface arg0, int arg1) {
+                // do something when the Cancel button is clicked
+            }
+        });
+        myAlertDialog.show();
+        return true;
     }
 }

@@ -1,9 +1,12 @@
 package com.mind.oceanic.the.synchronicity.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by dave on 1/21/16.
  */
-public class Person {
+public class Person implements Parcelable {
     private long personId;
     private String personFirstName;
     private String personLastName;
@@ -85,4 +88,60 @@ public class Person {
     public void setPersonCountry(String personCountry) {
         this.personCountry = personCountry;
     }
+
+
+    @Override
+    public String toString() {
+        return personFirstName + " " + personLastName;
+    }
+
+    public Person() {
+
+    }
+
+    public Person(Parcel in) {
+        personId = in.readLong();
+        personFirstName = in.readString();
+        personLastName = in.readString();
+        personMainPhone = in.readString();
+        personAddress = in.readString();
+        personCity = in.readString();
+        personProvince = in.readString();
+        personCountry = in.readString();
+        personEmail = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(personId);
+        dest.writeString(personFirstName);
+        dest.writeString(personLastName);
+        dest.writeString(personAddress);
+        dest.writeString(personCity);
+        dest.writeString(personProvince);
+        dest.writeString(personCountry);
+        dest.writeString(personEmail);
+        dest.writeString(personMainPhone);
+    }
+
+    public static final Parcelable.Creator<Person> CREATOR =
+            new Parcelable.Creator<Person>() {
+
+                @Override
+                public Person createFromParcel(Parcel source) {
+                    return new Person(source);
+                }
+
+                @Override
+                public Person[] newArray(int size) {
+                    return new Person[size];
+                }
+
+            };
 }
+
