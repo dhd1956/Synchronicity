@@ -216,7 +216,7 @@ import java.util.ArrayList;
         }
 
         public boolean update(Verb verb) {
-            String sqlCmd = "update " + SynchronicityDBOpenHelper.TABLE_VERBS + " Set " + SynchronicityDBOpenHelper.COLUMN_VERB_NAME + " = '" + verb.getVerbName()  + "' where " + SynchronicityDBOpenHelper.COLUMN_VERB_ID + " = " + verb.getVerbId() + ";";
+            String sqlCmd = "update " + SynchronicityDBOpenHelper.TABLE_VERBS + " Set " + SynchronicityDBOpenHelper.COLUMN_VERB_NAME + " = '" + verb.getVerbName()  + SynchronicityDBOpenHelper.COLUMN_VERB_APPLIES_TO + " = '" + verb.getVerbAppliesTo()  + "' where " + SynchronicityDBOpenHelper.COLUMN_VERB_ID + " = " + verb.getVerbId() + ";";
             Log.i("dolphiny", "update sql=" + sqlCmd);
             open();
             database.execSQL(sqlCmd);
@@ -375,16 +375,17 @@ import java.util.ArrayList;
             return synchItemEvents;
         }
 
-        public List<Note> findAllNotes() {
+        public List<Note> findAllEventNotes(String person) {
 
 //            Cursor cursor = database.query(SynchronicityDBOpenHelper.TABLE_SYNCH_ITEM_EVENTS, allSynchItemColumns,
 //                    null, null, null, null, null);
-            String sqlCmd="select * from notes;";
-            Log.i("dolphin", "Dolphi");
+            String sqlCmd="select noteId, eventDate, notePerson, noteInfo from notes left join events ON eventId  =  fkEventId " +
+                    "where notePerson = '"+person+"';";
+            Log.i("dolphin", "sql for person notes is="+sqlCmd);
             open();
             Cursor cursor = database.rawQuery(sqlCmd,null);
             Log.i("dolphin", "Dolphin " + cursor.getCount() + " note rows");
-            List<Note> notes = noteCursorToList(cursor);
+            List<Note> notes = personNoteCursorToList(cursor);
             return notes;
         }
 
@@ -590,6 +591,20 @@ import java.util.ArrayList;
         }
 
         private List<Note> noteCursorToList(Cursor cursor) {
+            List<Note> notes = new ArrayList<Note>();
+            if (cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    Note note = new Note();
+                    note.setNoteId(cursor.getLong(cursor.getColumnIndex(SynchronicityDBOpenHelper.COLUMN_NOTE_ID)));
+                    note.setNotePerson(cursor.getString(cursor.getColumnIndex(SynchronicityDBOpenHelper.COLUMN_NOTE_PERSON)));
+                    note.setNoteInfo(cursor.getString(cursor.getColumnIndex(SynchronicityDBOpenHelper.COLUMN_NOTE_INFO)));
+                    notes.add(note);
+                }
+            }
+            return notes;
+        }
+
+        private List<Note> personNoteCursorToList(Cursor cursor) {
             List<Note> notes = new ArrayList<Note>();
             if (cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {

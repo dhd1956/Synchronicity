@@ -21,19 +21,36 @@
         android:layout_alignParentLeft="true"
         />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:text="Name"
+        android:id="@+id/lbl_applies_to"
+        android:layout_below="@+id/txt_verb_name"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:inputType="text"
+        android:layout_below="@+id/lbl_applies_to"
+        android:id="@+id/txt_applies_to"
+        android:layout_alignParentLeft="true"
+        />
+
     <Button
         android:layout_width="100dp"
         android:layout_height="40dp"
         android:text="Cancel"
         android:id="@+id/btn_cancel"
-        android:layout_below="@+id/txt_verb_name"        />
+        android:layout_below="@+id/txt_applies_to"        />
 
     <Button
         android:layout_width="100dp"
         android:layout_height="40dp"
         android:text="Save"
         android:id="@+id/btn_save"
-        android:layout_below="@+id/txt_verb_name"
+        android:layout_below="@+id/txt_applies_to"
         android:layout_toRightOf="@+id/btn_cancel"
         />
 

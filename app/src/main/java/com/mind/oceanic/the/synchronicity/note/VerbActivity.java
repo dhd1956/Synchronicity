@@ -32,10 +32,13 @@ public class VerbActivity extends Activity  {
     List<Verb> verbs;
     long verbId=-1;
     String verbName;
+    String verbAppliesTo="";
+
     Button btnCancel;
     Button btnVerb;
     Button btnSave;
     EditText txtVerbName;
+    EditText txtAppliesTo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,7 @@ public class VerbActivity extends Activity  {
         verbName = b.getString("VerbName");
 
         txtVerbName = (EditText) findViewById(R.id.txt_verb_name);
+        txtAppliesTo = (EditText) findViewById(R.id.txt_applies_to);
         btnCancel = (Button) findViewById(R.id.btn_cancel);
         btnVerb = (Button) findViewById(R.id.btn_verb);
         btnSave = (Button) findViewById(R.id.btn_save);
@@ -59,9 +63,11 @@ public class VerbActivity extends Activity  {
         if (verbId != -1) {
             verb.setVerbId(verbId);
             verb.setVerbName(verbName);
+            verb.setVerbAppliesTo(verbAppliesTo);
             Log.i("dolphin","set verb name to verbName="+verbName+"  "+verbId);
         }
         txtVerbName.setText(verbName);
+        txtVerbName.setText(verbAppliesTo);
 
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +85,7 @@ public class VerbActivity extends Activity  {
                                            Verb verb = new Verb();
                                            verb.setVerbId(verbId);
                                            verb.setVerbName(txtVerbName.getText().toString());
-                                           verb.setVerbAppliesTo("All");
+                                           verb.setVerbAppliesTo(txtAppliesTo.getText().toString());
                                            if (verbId == -1) {
                                                saveNew(verb);
                                            } else {
