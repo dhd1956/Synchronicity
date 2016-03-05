@@ -15,24 +15,24 @@
         android:layout_alignParentEnd="true" />
         />
 
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:text="Return"
-        android:id="@+id/btn_return"
-        android:layout_below="@+id/lst_events"
-        android:layout_alignParentLeft="true"
-        />
+    <!--<Button-->
+        <!--android:layout_width="100dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:text="Return"-->
+        <!--android:id="@+id/btn_return"-->
+        <!--android:layout_below="@+id/lst_events"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--/>-->
 
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:text="Define Event"
-        android:id="@+id/btn_define_event"
-        android:layout_below="@+id/lst_events"
-        android:layout_toRightOf="@+id/btn_return"
-        android:layout_alignParentRight="true"
-        />
+    <!--<Button-->
+        <!--android:layout_width="100dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:text="Define Event"-->
+        <!--android:id="@+id/btn_define_event"-->
+        <!--android:layout_below="@+id/lst_events"-->
+        <!--android:layout_toRightOf="@+id/btn_return"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--/>-->
 
 </RelativeLayout>
 

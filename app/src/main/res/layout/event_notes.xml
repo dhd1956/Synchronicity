@@ -21,14 +21,14 @@
         android:layout_alignParentLeft="false"
         />
 
-    <Button
-        android:layout_width="90dp"
-        android:layout_height="40dp"
-        android:text="Contacts"
-        android:id="@+id/btn_contacts"
-        android:layout_toRightOf="@+id/txt_person"
-        android:layout_alignParentRight="true"
-            />
+    <!--<Button-->
+        <!--android:layout_width="90dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:text="Contacts"-->
+        <!--android:id="@+id/btn_contacts"-->
+        <!--android:layout_toRightOf="@+id/txt_person"-->
+        <!--android:layout_alignParentRight="true"-->
+            <!--/>-->
 
     <EditText
         android:layout_width="match_parent"
@@ -53,47 +53,47 @@
         android:layout_toRightOf="@+id/lst_verb"
         />
 
-    <Button
-        android:layout_width="85dp"
-        android:layout_height="40dp"
-        android:text="Cancel"
-        android:id="@+id/btn_cancel"
-        android:layout_below="@+id/lst_verb"  />
+    <!--<Button-->
+        <!--android:layout_width="85dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:text="Cancel"-->
+        <!--android:id="@+id/btn_cancel"-->
+        <!--android:layout_below="@+id/lst_verb"  />-->
 
-    <Button
-        android:layout_width="85dp"
-        android:layout_height="40dp"
-        android:text="Action"
-        android:id="@+id/btn_verb"
-        android:layout_toRightOf="@+id/btn_cancel"
-        android:layout_below="@+id/lst_verb"  />
+    <!--<Button-->
+        <!--android:layout_width="85dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:text="Action"-->
+        <!--android:id="@+id/btn_verb"-->
+        <!--android:layout_toRightOf="@+id/btn_cancel"-->
+        <!--android:layout_below="@+id/lst_verb"  />-->
 
 
-    <Button
-        android:layout_width="85dp"
-        android:layout_height="40dp"
-        android:text="Item"
-        android:id="@+id/btn_thing"
-        android:layout_toRightOf="@+id/btn_verb"
-        android:layout_below="@+id/lst_verb"  />
+    <!--<Button-->
+        <!--android:layout_width="85dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:text="Item"-->
+        <!--android:id="@+id/btn_thing"-->
+        <!--android:layout_toRightOf="@+id/btn_verb"-->
+        <!--android:layout_below="@+id/lst_verb"  />-->
 
-    <Button
-        android:layout_width="85dp"
-        android:layout_height="40dp"
-        android:text="Save"
-        android:id="@+id/btn_save"
-        android:layout_below="@+id/lst_verb"
-        android:layout_toRightOf="@+id/btn_thing"
-        />
+    <!--<Button-->
+        <!--android:layout_width="85dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:text="Save"-->
+        <!--android:id="@+id/btn_save"-->
+        <!--android:layout_below="@+id/lst_verb"-->
+        <!--android:layout_toRightOf="@+id/btn_thing"-->
+        <!--/>-->
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="Add Event to Calendar"
-        android:id="@+id/btn_add_to_calendar"
-        android:layout_below="@+id/btn_cancel"
-        android:layout_centerHorizontal="true"
-        />
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:text="Add Event to Calendar"-->
+        <!--android:id="@+id/btn_add_to_calendar"-->
+        <!--android:layout_below="@+id/btn_cancel"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--/>-->
 </RelativeLayout>
 
 

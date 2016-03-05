@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,9 +47,9 @@ public class ThingActivity extends Activity  {
         thingName = b.getString("ThingName");
 
         txtThingName = (EditText) findViewById(R.id.txt_thing_name);
-        btnCancel = (Button) findViewById(R.id.btn_cancel);
-        btnThing = (Button) findViewById(R.id.btn_thing);
-        btnSave = (Button) findViewById(R.id.btn_save);
+//        btnCancel = (Button) findViewById(R.id.btn_cancel);
+//        btnThing = (Button) findViewById(R.id.btn_thing);
+//        btnSave = (Button) findViewById(R.id.btn_save);
 
         Thing thing = new Thing();
         if (thingId != -1) {
@@ -69,17 +71,7 @@ public class ThingActivity extends Activity  {
         btnSave.setOnClickListener(new View.OnClickListener() {
                                        @Override
                                        public void onClick(View v) {
-                                           Thing thing = new Thing();
-                                           thing.setThingId(thingId);
-                                           thing.setThingName(txtThingName.getText().toString());
-                                           thing.setThingUse("All");
-                                           if (thingId == -1) {
-                                               saveNew(thing);
-                                           } else {
-                                               saveExisting(thing);
-                                           }
-                                           prepareReturnValues();
-                                           finish();
+                                            save();
 
                                        }
                                    }
@@ -89,6 +81,20 @@ public class ThingActivity extends Activity  {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    protected void save(){
+        Thing thing = new Thing();
+        thing.setThingId(thingId);
+        thing.setThingName(txtThingName.getText().toString());
+        thing.setThingUse("All");
+        if (thingId == -1) {
+            saveNew(thing);
+        } else {
+            saveExisting(thing);
+        }
+        prepareReturnValues();
+        finish();
     }
 
     protected void prepareReturnValues() {
@@ -106,11 +112,43 @@ public class ThingActivity extends Activity  {
     }
 
     protected boolean saveExisting(Thing thing) {
-        Log.i("dolphinu","saveexisting");
+        Log.i("dolphinu", "saveexisting");
         if (datasource.update(thing)) {
             return true;
         } else {
             return false;
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_thing, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem i) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = i.getItemId();
+
+        switch (i.getItemId()) {
+
+            case R.id.menu_cancel:
+                finish();
+                break;
+
+            case R.id.menu_save:
+                save();
+                break;
+
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(i);
+    }
+
 }

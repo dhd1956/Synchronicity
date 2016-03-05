@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -65,101 +67,52 @@ public class MatchKeywordsActivity extends Activity {
 
         setCursors();
         compareDetails();
-        Button btn_Ignore = (Button) findViewById(R.id.btn_ignore);
-        btn_Ignore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Ignore ignore = new Ignore();
-                Log.i("dolphin", "mathword=" + lbl_match_word.getText());
-                ignore.setWord(lbl_match_word.getText().toString());
-                try {
-                    datasource.add(ignore);
-                } catch (Exception e){
-                    Context context = getApplicationContext();
-                    CharSequence text = "Finished";
-                    int duration = Toast.LENGTH_SHORT;
-
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                }
-                ignoreWords = datasource.findAllIgnores();
-                compareDetails();
-            }
-        });
-
-        Button btn_Return = (Button) findViewById(R.id.btn_return);
-        btn_Return.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-
-        Button btn_Match = (Button) findViewById(R.id.btn_match);
-        btn_Match.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("dolphin","sink id="+synchId+"  left="+leftEvents.get(i).getEventId()+"  right="+rightEvents.get(j).getEventId());
-                if (datasource.findLinkedTogetherEvents(leftEvents.get(i).getEventId(),rightEvents.get(j).getEventId())) {
-                    Context context = getApplicationContext();
-                    CharSequence text = "Already matched";
-                    int duration = Toast.LENGTH_SHORT;
-
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-
-                    Log.i("dolphin","sinked id=??");
-                    links = datasource.findAllSynchItemEvents();
-                    for (int ii=0;ii<links.size();ii++) {
-                        Log.i("dolphin","sinked id="+links.get(ii).getSeSynchId()+"  sinked e id=" +links.get(ii).getSeEventId());
-
-                    }
-                } else {
-                    Intent intent = new Intent(MatchKeywordsActivity.this, MaintainSynchronicityActivity.class);
-                    synchSummary = null;
-                    synchDetails = null;
-                    intent.putExtra("Id", synchId);
-                    intent.putExtra("Summary", synchSummary);
-                    intent.putExtra("Detail", synchDetails);
-                    intent.putExtra("rightEventId", leftEvents.get(i).getEventId());
-                    Log.i("dolphin", "ww2  " + i);
-                    intent.putExtra("leftEventId", rightEvents.get(j).getEventId());
-                    intent.putExtra("Flag", "set");
-                    Log.i("dolphin", "still alive");
-                    startActivityForResult(intent, 1);
-                }
-
-//                eventId = b.getLong("leftEventId");
-//                Log.i("dolphin", "maintina start=" + synchSummary + "  AND " + synchDetails + "  and " + synchId);
-//                event = datasource.findEvent(eventId);
-//                showEvent();
-//                Log.i("dolphin", "detail is coming into maintain=" + synchDetails);
-//                eventId = b.getLong("rightEventId");
-//                event = datasource.findEvent(eventId);
-//                showEvent();
-
-            }
-        });
-        Button btn_Pass = (Button) findViewById(R.id.btn_pass);
-        btn_Pass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                compareDetails();
-                Log.i("dolphin", "in Pass saveI=" + saveI + "  saveJ=" + saveJ + "   saveLeftPos=" + saveLeftPos + "  right=" + saveRightPos);
-            }
-        });
+//        Button btn_Ignore = (Button) findViewById(R.id.btn_ignore);
+//        btn_Ignore.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ignore();
+//            }
+//        });
+//
+//        Button btn_Return = (Button) findViewById(R.id.btn_return);
+//        btn_Return.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
+//
+//
+//        Button btn_Match = (Button) findViewById(R.id.btn_match);
+//        btn_Match.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                match();
+//
+//
+//            }
+//        });
+//        Button btn_Pass = (Button) findViewById(R.id.btn_pass);
+//        btn_Pass.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                compareDetails();
+//                Log.i("dolphin", "in Pass saveI=" + saveI + "  saveJ=" + saveJ + "   saveLeftPos=" + saveLeftPos + "  right=" + saveRightPos);
+//            }
+//        });
 
 
     }
 
-    private boolean foundDuplicate(long s,long le,long re) {
-//        if (datasource.findLinkedEvent(s,le) && datasource.findLinkedEvent(s,re)) {
-//            return true;
-//        } else {
-            return false;
-//        }
-    }
+//    private boolean foundDuplicate(long s,long le,long re) {
+////        if (datasource.findLinkedEvent(s,le) && datasource.findLinkedEvent(s,re)) {
+////            return true;
+////        } else {
+//            return false;
+////        }
+//    }
 
     private void setCursors() {
         // get findAll events and circle through them
@@ -297,4 +250,101 @@ public class MatchKeywordsActivity extends Activity {
 //        Log.i("dolphin","  right retstr="+retStr);
         return retStr;
     }
+
+    protected void ignore(){
+        Ignore ignore = new Ignore();
+        Log.i("dolphin", "mathword=" + lbl_match_word.getText());
+        ignore.setWord(lbl_match_word.getText().toString());
+        try {
+            datasource.add(ignore);
+        } catch (Exception e){
+            Context context = getApplicationContext();
+            CharSequence text = "Finished";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+        ignoreWords = datasource.findAllIgnores();
+        compareDetails();
+    }
+
+    protected void match(){
+        if (datasource.findLinkedTogetherEvents(leftEvents.get(i).getEventId(),rightEvents.get(j).getEventId())) {
+            Context context = getApplicationContext();
+            CharSequence text = "Already matched";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+
+            Log.i("dolphin","sinked id=??");
+            links = datasource.findAllSynchItemEvents();
+            for (int ii=0;ii<links.size();ii++) {
+                Log.i("dolphin","sinked id="+links.get(ii).getSeSynchId()+"  sinked e id=" +links.get(ii).getSeEventId());
+
+            }
+        } else {
+            Intent intent = new Intent(MatchKeywordsActivity.this, MaintainSynchronicityActivity.class);
+            synchSummary = null;
+            synchDetails = null;
+            intent.putExtra("Id", synchId);
+            intent.putExtra("Summary", synchSummary);
+            intent.putExtra("Detail", synchDetails);
+            intent.putExtra("rightEventId", leftEvents.get(i).getEventId());
+            Log.i("dolphin", "ww2  " + i);
+            intent.putExtra("leftEventId", rightEvents.get(j).getEventId());
+            intent.putExtra("Flag", "set");
+            Log.i("dolphin", "still alive");
+            startActivityForResult(intent, 1);
+        }
+    }
+
+    protected void pass(){
+        compareDetails();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_match, menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem i) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = i.getItemId();
+
+        switch (i.getItemId()) {
+
+//            case R.id.action_settings:
+//                Intent intent = new Intent(this, HttpMainActivity.class);
+//                startActivity(intent);
+//                break;
+            case R.id.menu_return:
+                finish();
+                break;
+
+            case R.id.menu_ignore:
+                ignore();
+                break;
+
+            case R.id.menu_match:
+                match();
+                break;
+
+            case R.id.menu_pass:
+                pass();
+                break;
+
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(i);
+    }
+
 }

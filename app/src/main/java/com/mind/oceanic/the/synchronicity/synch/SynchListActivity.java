@@ -44,35 +44,25 @@ public class SynchListActivity extends Activity implements View.OnClickListener 
 
         setList();
 
-        Button btn_create_view = (Button) findViewById(R.id.btn_create_new);
-        Button btnReturn = (Button) findViewById(R.id.btn_return);
-
-        btnReturn.setOnClickListener(new View.OnClickListener() {
-            @Override
-                    public void onClick(View v2) {
-                finish();
-            }
-        });
-
-        btn_create_view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v2) {
-                Intent intent = new Intent(SynchListActivity.this, MaintainSynchronicityActivity.class);
-                synchDate = null;
-                synchSummary = null;
-                synchDetails = null;
-                intent.putExtra("Id", synchId);
-                intent.putExtra("Date",synchDate);
-                intent.putExtra("Summary", synchSummary);
-                intent.putExtra("Detail", synchDetails);
-                intent.putExtra("Flag","Reset");
-                Log.i("dolphin", "still alive");
-                startActivityForResult(intent, 1);
-
-            }
-        });
-
-        Log.i("dolphin", "start");
+//        Button btn_create_view = (Button) findViewById(R.id.btn_create_new);
+//        Button btnReturn = (Button) findViewById(R.id.btn_return);
+//
+//        btnReturn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//                    public void onClick(View v2) {
+//                finish();
+//            }
+//        });
+//
+//        btn_create_view.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v2) {
+//
+//
+//            }
+//        });
+//
+//        Log.i("dolphin", "start");
 
 
 
@@ -110,28 +100,55 @@ public class SynchListActivity extends Activity implements View.OnClickListener 
 //        startActivity(calIntent);
     }
 
+    protected void createNewSynch() {
+        Intent intent = new Intent(SynchListActivity.this, MaintainSynchronicityActivity.class);
+        synchDate = null;
+        synchSummary = null;
+        synchDetails = null;
+        intent.putExtra("Id", synchId);
+        intent.putExtra("Date",synchDate);
+        intent.putExtra("Summary", synchSummary);
+        intent.putExtra("Detail", synchDetails);
+        intent.putExtra("Flag","Reset");
+        Log.i("dolphin", "still alive");
+        startActivityForResult(intent, 1);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_synch_list, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem i) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        int id = i.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (i.getItemId()) {
+
+//            case R.id.action_settings:
+//                Intent intent = new Intent(this, HttpMainActivity.class);
+//                startActivity(intent);
+//                break;
+            case R.id.menu_return:
+                finish();
+                break;
+
+            case R.id.menu_new_synch:
+                createNewSynch();
+                break;
+
+            default:
+                break;
         }
 
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(i);
     }
+
 
     @Override
     public void onClick(View view) {

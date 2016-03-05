@@ -48,7 +48,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:text="Notes"
+        android:text="Reminders"
         android:id="@+id/lbl_notes"
         android:layout_below="@id/txt_event_details" />
 
@@ -61,29 +61,29 @@
         android:layout_alignParentEnd="true" />
 
 
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:text="Cancel"
-        android:id="@+id/btnCancel"
-        android:layout_below="@+id/lst_notes"        />
+    <!--<Button-->
+        <!--android:layout_width="100dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:text="Cancel"-->
+        <!--android:id="@+id/btnCancel"-->
+        <!--android:layout_below="@+id/lst_notes"        />-->
 
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:text="Notes"
-        android:id="@+id/btn_notes"
-        android:layout_toRightOf="@+id/btnCancel"
-        android:layout_below="@+id/lst_notes"        />
+    <!--<Button-->
+        <!--android:layout_width="100dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:text="Notes"-->
+        <!--android:id="@+id/btn_notes"-->
+        <!--android:layout_toRightOf="@+id/btnCancel"-->
+        <!--android:layout_below="@+id/lst_notes"        />-->
 
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:text="Save"
-        android:id="@+id/btnSave"
-        android:layout_below="@+id/lst_notes"
-        android:layout_toRightOf="@+id/btn_notes"
-        />
+    <!--<Button-->
+        <!--android:layout_width="100dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:text="Save"-->
+        <!--android:id="@+id/btnSave"-->
+        <!--android:layout_below="@+id/lst_notes"-->
+        <!--android:layout_toRightOf="@+id/btn_notes"-->
+        <!--/>-->
 
 </RelativeLayout>
 

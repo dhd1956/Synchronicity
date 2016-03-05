@@ -11,7 +11,7 @@ import android.util.Log;
 public class SynchronicityDBOpenHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "Synchronicity.db";
-    public static final int DATABASE_VERSION = 16;
+    public static final int DATABASE_VERSION = 19;
 
     public static final String TABLE_SYNCH_ITEMS = "synchItems";
     public static final String COLUMN_SYNCH_ID = "synchId";
@@ -153,13 +153,13 @@ public class SynchronicityDBOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db){
         Log.i("dolphinv", "prior created synchItem table");
-//        db.execSQL(TABLE_SYNCH_ITEMS_CREATE);
-//        db.execSQL(TABLE_EVENTS_CREATE);
-////        db.execSQL(TABLE_SYNCH_ITEM_EVENTS_CREATE);
+        db.execSQL(TABLE_SYNCH_ITEMS_CREATE);
+        db.execSQL(TABLE_EVENTS_CREATE);
+        db.execSQL(TABLE_SYNCH_ITEM_EVENTS_CREATE);
         db.execSQL(TABLE_IGNORES_CREATE);
         db.execSQL(TABLE_PERSONS_CREATE);
         db.execSQL(TABLE_NOTES_CREATE);
-//        Log.i("dolphinv", "created synchItem table");
+        Log.i("dolphinv", "created synchItem table");
         db.execSQL(TABLE_PLACES_CREATE);
         db.execSQL(TABLE_THINGS_CREATE);
         db.execSQL(TABLE_VERBS_CREATE);
@@ -167,9 +167,9 @@ public class SynchronicityDBOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade (SQLiteDatabase db,int oldVersion, int newVersion){
-//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SYNCH_ITEMS);
-//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
-//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SYNCH_ITEM_EVENTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SYNCH_ITEMS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SYNCH_ITEM_EVENTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_IGNORES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PERSONS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLACES);

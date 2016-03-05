@@ -10,6 +10,8 @@ import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,10 +25,12 @@ import android.widget.Toast;
 import com.mind.oceanic.the.synchronicity.MainActivity;
 import com.mind.oceanic.the.synchronicity.R;
 import com.mind.oceanic.the.synchronicity.db.SynchronicityDataSource;
+import com.mind.oceanic.the.synchronicity.match.MatchKeywordsActivity;
 import com.mind.oceanic.the.synchronicity.model.Event;
 import com.mind.oceanic.the.synchronicity.model.SynchItem;
 import com.mind.oceanic.the.synchronicity.model.SynchItemEvent;
 import com.mind.oceanic.the.synchronicity.synch.MaintainSynchronicityActivity;
+import com.mind.oceanic.the.synchronicity.synch.SynchListActivity;
 
 import java.text.Collator;
 import java.text.SimpleDateFormat;
@@ -54,10 +58,10 @@ import java.util.Locale;
     protected String eventSummary;
     protected String eventDetails;
     protected String eventDate;
-    private Button btnReturn;
-    private Button btnDefineEvent;
-    private Button btnCancel;
-    private Button btnSave;
+//    private Button btnReturn;
+//    private Button btnDefineEvent;
+//    private Button btnCancel;
+//    private Button btnSave;
     String entryDate = "";
     protected DatePickerDialog datePickerDialog;
     private SimpleDateFormat dateFormatter;
@@ -78,10 +82,10 @@ import java.util.Locale;
 //        eventDate = b.getString("EventDate");
         datasource = new SynchronicityDataSource(this);
         datasource.open();
-        btnDefineEvent = (Button) findViewById(R.id.btn_define_event);
-        btnDefineEvent.setOnClickListener(this);
-        btnReturn = (Button) findViewById(R.id.btn_return);
-        btnReturn.setOnClickListener(this);
+//        btnDefineEvent = (Button) findViewById(R.id.btn_define_event);
+//        btnDefineEvent.setOnClickListener(this);
+//        btnReturn = (Button) findViewById(R.id.btn_return);
+//        btnReturn.setOnClickListener(this);
 
         setList();
 //        ET_DATE = (EditText) findViewById(R.id.txt_synch_date);
@@ -119,23 +123,23 @@ import java.util.Locale;
     @Override
     public void onClick(View view) {
 
-        if(view == btnDefineEvent) {
-
-            Log.i("dolphinp", "after new show=");
-            Intent intent2 = new Intent(EventListActivity.this, UpdateEventActivity.class);
-            eventId = -1;
-            eventSummary = null;
-            eventDetails = null;
-            eventDate = null;
-            intent2.putExtra("EventId", eventId);
-            intent2.putExtra("EventSummary", eventSummary);
-            intent2.putExtra("EventDetails", eventDetails);
-            intent2.putExtra("EventDate", eventDate);
-
-            startActivityForResult(intent2, 2);
-        } else if (view == btnReturn) {
-            finish();
-        }
+//        if(view == btnDefineEvent) {
+//
+//            Log.i("dolphinp", "after new show=");
+//            Intent intent2 = new Intent(EventListActivity.this, UpdateEventActivity.class);
+//            eventId = -1;
+//            eventSummary = null;
+//            eventDetails = null;
+//            eventDate = null;
+//            intent2.putExtra("EventId", eventId);
+//            intent2.putExtra("EventSummary", eventSummary);
+//            intent2.putExtra("EventDetails", eventDetails);
+//            intent2.putExtra("EventDate", eventDate);
+//
+//            startActivityForResult(intent2, 2);
+//        } else if (view == btnReturn) {
+//            finish();
+//        }
 
 //        } else if(view == b) {
 //            setShoppingList();
@@ -267,5 +271,42 @@ import java.util.Locale;
         });
         myAlertDialog.show();
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_event_list, menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem i) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = i.getItemId();
+
+        switch (i.getItemId()) {
+
+//            case R.id.action_settings:
+//                Intent intent = new Intent(this, HttpMainActivity.class);
+//                startActivity(intent);
+//                break;
+            case R.id.menu_record_event:
+                Intent intent5 = new Intent(EventListActivity.this, UpdateEventActivity.class);
+                intent5.putExtra("EventSource", "EventList");
+                startActivityForResult(intent5, 5);
+                break;
+
+            case R.id.menu_return:
+            finish();
+            break;
+
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(i);
     }
 }

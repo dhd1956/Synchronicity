@@ -11,21 +11,21 @@
         android:id="@+id/lst_contacts"
         />
 
-    <Button
-        android:layout_width="90dp"
-        android:layout_height="40dp"
-        android:text="Cancel"
-        android:id="@+id/btn_cancel"
-        android:layout_below="@+id/lst_contacts"  />
+    <!--<Button-->
+        <!--android:layout_width="90dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:text="Cancel"-->
+        <!--android:id="@+id/btn_cancel"-->
+        <!--android:layout_below="@+id/lst_contacts"  />-->
 
-    <Button
-        android:layout_width="90dp"
-        android:layout_height="40dp"
-        android:text="Use"
-        android:id="@+id/btn_use"
-        android:layout_below="@+id/lst_contacts"
-        android:layout_toRightOf="@+id/btn_cancel"
-        />
+    <!--<Button-->
+        <!--android:layout_width="90dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:text="Use"-->
+        <!--android:id="@+id/btn_use"-->
+        <!--android:layout_below="@+id/lst_contacts"-->
+        <!--android:layout_toRightOf="@+id/btn_cancel"-->
+        <!--/>-->
 
 </RelativeLayout>
 

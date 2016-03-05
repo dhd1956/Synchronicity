@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -49,12 +51,12 @@ public class EventNotesActivity extends Activity {
     String verbName;
     String thingName;
 
-    Button btnContacts;
-    Button btnCancel;
-    Button btnVerb;
-    Button btnThing;
-    Button btnSave;
-    Button btnAddToCalendar;
+//    Button btnContacts;
+//    Button btnCancel;
+//    Button btnVerb;
+//    Button btnThing;
+//    Button btnSave;
+//    Button btnAddToCalendar;
     ListView lstVerb;
     ListView lstThing;
     EditText txtNote;
@@ -79,100 +81,74 @@ public class EventNotesActivity extends Activity {
         noteInfo = b.getString("NoteInfo");
         txtPerson = (EditText) findViewById(R.id.txt_person);
         txtNote = (EditText) findViewById(R.id.txt_note);
-        btnContacts = (Button) findViewById(R.id.btn_contacts);
-        btnCancel = (Button) findViewById(R.id.btn_cancel);
-        btnVerb = (Button) findViewById(R.id.btn_verb);
-        btnThing = (Button) findViewById(R.id.btn_thing);
-        btnSave = (Button) findViewById(R.id.btn_save);
-        btnAddToCalendar = (Button) findViewById(R.id.btn_add_to_calendar);
+//        btnContacts = (Button) findViewById(R.id.btn_contacts);
+//        btnCancel = (Button) findViewById(R.id.btn_cancel);
+//        btnVerb = (Button) findViewById(R.id.btn_verb);
+//        btnThing = (Button) findViewById(R.id.btn_thing);
+//        btnSave = (Button) findViewById(R.id.btn_save);
+//        btnAddToCalendar = (Button) findViewById(R.id.btn_add_to_calendar);
         lstVerb = (ListView) findViewById(R.id.lst_verb);
         lstThing = (ListView) findViewById(R.id.lst_thing);
 //        btnSave.setOnClickListener(this);
         txtPerson.setText(person);
         txtNote.setText(noteInfo);
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-                                         @Override
-                                         public void onClick(View v) {
-                                             finish();
-                                         }
-                                     }
-        );
+//        btnCancel.setOnClickListener(new View.OnClickListener() {
+//                                         @Override
+//                                         public void onClick(View v) {
+//                                             finish();
+//                                         }
+//                                     }
+//        );
 
         Log.i("dolphin", "notes");
 
-        btnContacts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent5 = new Intent(EventNotesActivity.this, ContactsActivity.class);
-                verbId = -1;
-                intent5.putExtra("VerbId", verbId);
-                Log.i("dolphin", "btnContacts click");
-                startActivityForResult(intent5, 5);
-            }
-
-        });
-
-        btnAddToCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                setToSave();
-                noteInfo = txtNote.getText().toString();
-                Intent intent6 = new Intent(EventNotesActivity.this,CalendarActivity.class);
-                intent6.putExtra("EventId",eventId);
-                intent6.putExtra("NoteId",noteId);
-                intent6.putExtra("NotePerson",txtPerson.getText().toString());
-                intent6.putExtra("NoteInfo",noteInfo);
-                startActivityForResult(intent6,6);
-            }
-        });
-
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!person.equals("")) {
-                    if (okCancelReminderAlert()) {
-                    } else {
-                        setToSave();
-                    }
-                }
-            }
-        });
-
-        btnVerb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent(EventNotesActivity.this, VerbActivity.class);
-                verbId = -1;
-                intent1.putExtra("VerbId", verbId);
-                Log.i("dolphin","btnVerb click");
-                startActivityForResult(intent1, 3);
-            }
-
-        });
-
-
-        btnThing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent4 = new Intent(EventNotesActivity.this, VerbActivity.class);
-                thingId = -1;
-                intent4.putExtra("VerbId", thingId);
-                Log.i("dolphin","btnVerb click");
-                startActivityForResult(intent4, 4);
-            }
-
-        });        btnThing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent(EventNotesActivity.this, ThingActivity.class);
-                thingId = -1;
-                intent1.putExtra("ThingId", thingId);
-                Log.i("dolphin","btnThing click");
-                startActivityForResult(intent1, 3);
-            }
-
-        });
+//        btnContacts.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getContacts();
+//            }
+//
+//        });
+//
+//        btnAddToCalendar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                setToSave();
+//                addToCalendar();
+////                noteInfo = txtNote.getText().toString();
+////                Intent intent6 = new Intent(EventNotesActivity.this,CalendarActivity.class);
+////                intent6.putExtra("EventId",eventId);
+////                intent6.putExtra("NoteId",noteId);
+////                intent6.putExtra("NotePerson",txtPerson.getText().toString());
+////                intent6.putExtra("NoteInfo",noteInfo);
+////                startActivityForResult(intent6,6);
+//            }
+//        });
+//
+//        btnSave.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                save();
+//            }
+//        });
+//
+//        btnVerb.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                setAction();
+//            }
+//
+//        });
+//
+//
+//        btnThing.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                setItem();
+//            }
+//        });
     }
 
 
@@ -266,7 +242,7 @@ public class EventNotesActivity extends Activity {
                 Thing thing = new Thing();
                 thing = things.get(position);
                 thingId = thing.getThingId();
-                Log.i("dolphin","deleting="+thingId+thing.getThingName());
+                Log.i("dolphin", "deleting=" + thingId + thing.getThingName());
                 if (okCancelThingAlert()) {
 //                    datasource.deleteThing(thingId);
                 }
@@ -317,7 +293,48 @@ public class EventNotesActivity extends Activity {
         }
         return str1;
     }
+    protected void getContacts() {
 
+        Intent intent5 = new Intent(EventNotesActivity.this, ContactsActivity.class);
+        verbId = -1;
+        intent5.putExtra("VerbId", verbId);
+        Log.i("dolphin", "btnContacts click");
+        startActivityForResult(intent5, 5);
+    }
+    protected void addToCalendar() {
+        noteInfo = txtNote.getText().toString();
+        Intent intent6 = new Intent(EventNotesActivity.this,CalendarActivity.class);
+        intent6.putExtra("EventId",eventId);
+        intent6.putExtra("NoteId",noteId);
+        intent6.putExtra("NotePerson",txtPerson.getText().toString());
+        intent6.putExtra("NoteInfo", noteInfo);
+        startActivityForResult(intent6,6);
+    }
+
+    protected void setAction(){
+        Intent intent1 = new Intent(EventNotesActivity.this, VerbActivity.class);
+        verbId = -1;
+        intent1.putExtra("VerbId", verbId);
+        Log.i("dolphin","btnVerb click");
+        startActivityForResult(intent1, 3);
+    }
+
+    protected void setItem(){
+        Intent intent4 = new Intent(EventNotesActivity.this, ThingActivity.class);
+        thingId = -1;
+        intent4.putExtra("ThingId", thingId);
+        Log.i("dolphin","btnThing click");
+        startActivityForResult(intent4, 4);
+    }
+
+    protected void save() {
+        if (!person.equals("")) {
+            if (okCancelReminderAlert()) {
+            } else {
+                setToSave();
+            }
+        }
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -396,7 +413,7 @@ public class EventNotesActivity extends Activity {
                 Log.i("dolphin","before check");
                 checkForActionRequired(person);
                 setToSave();
-                Log.i("dolphin","after check");
+                Log.i("dolphin", "after check");
                 ok = true;
             }
         });
@@ -570,7 +587,56 @@ public class EventNotesActivity extends Activity {
         txtNote.setText(updateThingText(txtNote.getText().toString(), item));
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_note, menu);
+        return true;
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem i) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = i.getItemId();
+
+        switch (i.getItemId()) {
+
+//            case R.id.action_settings:
+//                Intent intent = new Intent(this, HttpMainActivity.class);
+//                startActivity(intent);
+//                break;
+            case R.id.menu_cancel:
+                finish();
+                break;
+
+            case R.id.menu_contacts:
+                getContacts();
+                break;
+
+            case R.id.menu_calendar:
+                addToCalendar();
+                break;
+
+            case R.id.menu_action:
+                setAction();
+                break;
+
+            case R.id.menu_item:
+                setItem();
+                break;
+
+            case R.id.menu_save:
+                save();
+                break;
+
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(i);
+    }
 
 }
 

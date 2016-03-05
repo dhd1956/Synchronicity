@@ -58,42 +58,42 @@ public class UpdateSynchDetailActivity extends Activity {
         ET_DETAILS = (EditText) findViewById(R.id.txt_synch_details);
         ET_DETAILS.setText(synchItemDetails);
 
-        Button btnSave = (Button) findViewById(R.id.btnSave);
-        btnSave.setOnClickListener(new View.OnClickListener() {
-                                       @Override
-                                       public void onClick(View v) {
-                                          SynchItem synchItem = new SynchItem();
-                                          if (!newItem) {
-                                              synchItem.setSynchId(synchItemId);
-                                              synchItem.setSynchDate(synchItemDate);
-                                              synchItem.setSynchSummary(synchItemSummary);
-                                              synchItem.setSynchDetails(synchItemDetails);
-                                          }
-                                          synchItem.setSynchSummary(ET_SUMMARY.getText().toString());
-                                          synchItem.setSynchDetails(ET_DETAILS.getText().toString());
-                                          Log.i("dolphiny", "setdetail=" + synchItem.getSynchDetails());
-
-                                          if (newItem) {
-                                              Log.i("dolphinv","saving new");
-                                              SaveNew(synchItem);
-                                          } else {
-                                              Log.i("dolphinv","saving existing");
-                                              SaveExisting(synchItem);
-                                          }
-                                           prepareReturnValues();
-                                      }
-                                  }
-        );
-
-        Button btnCancel = (Button) findViewById(R.id.btnCancel);
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("dolphin","btnCancel");
-                prepareReturnValues();
-            }
-        }
-        );
+//        Button btnSave = (Button) findViewById(R.id.btnSave);
+//        btnSave.setOnClickListener(new View.OnClickListener() {
+//                                       @Override
+//                                       public void onClick(View v) {
+//                                          SynchItem synchItem = new SynchItem();
+//                                          if (!newItem) {
+//                                              synchItem.setSynchId(synchItemId);
+//                                              synchItem.setSynchDate(synchItemDate);
+//                                              synchItem.setSynchSummary(synchItemSummary);
+//                                              synchItem.setSynchDetails(synchItemDetails);
+//                                          }
+//                                          synchItem.setSynchSummary(ET_SUMMARY.getText().toString());
+//                                          synchItem.setSynchDetails(ET_DETAILS.getText().toString());
+//                                          Log.i("dolphiny", "setdetail=" + synchItem.getSynchDetails());
+//
+//                                          if (newItem) {
+//                                              Log.i("dolphinv","saving new");
+//                                              SaveNew(synchItem);
+//                                          } else {
+//                                              Log.i("dolphinv","saving existing");
+//                                              SaveExisting(synchItem);
+//                                          }
+//                                           prepareReturnValues();
+//                                      }
+//                                  }
+//        );
+//
+//        Button btnCancel = (Button) findViewById(R.id.btnCancel);
+//        btnCancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.i("dolphin","btnCancel");
+//                prepareReturnValues();
+//            }
+//        }
+//        );
 
 
         Log.i("dolphin", "togglest");

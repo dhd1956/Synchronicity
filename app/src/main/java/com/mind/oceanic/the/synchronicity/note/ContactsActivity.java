@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -49,7 +51,7 @@ public class ContactsActivity extends Activity {
                 android.R.layout.simple_list_item_1,
                 listItems);
         lstContacts.setAdapter(adapter);
-        Log.i("dolphin","in contacts");
+        Log.i("dolphin", "in contacts");
 
 //        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_listview, mobileArray);
         ArrayAdapter adapter = new ArrayAdapter<String>(ContactsActivity.this,R.layout.contacts);
@@ -102,10 +104,35 @@ public class ContactsActivity extends Activity {
         Intent intent=new Intent();
 
         intent.putExtra("ContactName", name);
-        Log.i("dolphin","vvvverbid="+name);
+        Log.i("dolphin", "vvvverbid=" + name);
         setResult(6, intent);
         finish();
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_contacts, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem i) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = i.getItemId();
+
+        switch (i.getItemId()) {
+
+            case R.id.menu_cancel:
+                prepareReturnValues("");
+                break;
+
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(i);
+    }
 
 }

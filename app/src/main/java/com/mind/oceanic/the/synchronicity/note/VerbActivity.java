@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,9 +36,9 @@ public class VerbActivity extends Activity  {
     String verbName;
     String verbAppliesTo="";
 
-    Button btnCancel;
-    Button btnVerb;
-    Button btnSave;
+//    Button btnCancel;
+//    Button btnVerb;
+//    Button btnSave;
     EditText txtVerbName;
     EditText txtAppliesTo;
 
@@ -55,9 +57,9 @@ public class VerbActivity extends Activity  {
 
         txtVerbName = (EditText) findViewById(R.id.txt_verb_name);
         txtAppliesTo = (EditText) findViewById(R.id.txt_applies_to);
-        btnCancel = (Button) findViewById(R.id.btn_cancel);
-        btnVerb = (Button) findViewById(R.id.btn_verb);
-        btnSave = (Button) findViewById(R.id.btn_save);
+//        btnCancel = (Button) findViewById(R.id.btn_cancel);
+//        btnVerb = (Button) findViewById(R.id.btn_verb);
+//        btnSave = (Button) findViewById(R.id.btn_save);
 
         Verb verb = new Verb();
         if (verbId != -1) {
@@ -70,33 +72,23 @@ public class VerbActivity extends Activity  {
         txtVerbName.setText(verbAppliesTo);
 
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-                                         @Override
-                                         public void onClick(View v) {
-                                             verbId = -1;
-                                             finish();
-                                         }
-                                     }
-        );
-
-        btnSave.setOnClickListener(new View.OnClickListener() {
-                                       @Override
-                                       public void onClick(View v) {
-                                           Verb verb = new Verb();
-                                           verb.setVerbId(verbId);
-                                           verb.setVerbName(txtVerbName.getText().toString());
-                                           verb.setVerbAppliesTo(txtAppliesTo.getText().toString());
-                                           if (verbId == -1) {
-                                               saveNew(verb);
-                                           } else {
-                                               saveExisting(verb);
-                                           }
-                                           prepareReturnValues();
-                                           finish();
-
-                                       }
-                                   }
-        );
+//        btnCancel.setOnClickListener(new View.OnClickListener() {
+//                                         @Override
+//                                         public void onClick(View v) {
+//                                             verbId = -1;
+//                                             finish();
+//                                         }
+//                                     }
+//        );
+//
+//        btnSave.setOnClickListener(new View.OnClickListener() {
+//                                       @Override
+//                                       public void onClick(View v) {
+//save();
+//
+//                                       }
+//                                   }
+//        );
 
     }
     @Override
@@ -109,6 +101,20 @@ public class VerbActivity extends Activity  {
         intent.putExtra("VerbId", verbId);
         Log.i("dolphin","vvvverbid="+verbId);
         setResult(1001, intent);
+        finish();
+    }
+
+    protected void save() {
+        Verb verb = new Verb();
+        verb.setVerbId(verbId);
+        verb.setVerbName(txtVerbName.getText().toString());
+        verb.setVerbAppliesTo(txtAppliesTo.getText().toString());
+        if (verbId == -1) {
+            saveNew(verb);
+        } else {
+            saveExisting(verb);
+        }
+        prepareReturnValues();
         finish();
     }
 
@@ -128,5 +134,34 @@ public class VerbActivity extends Activity  {
             return false;
         }
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_verb, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem i) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = i.getItemId();
+
+        switch (i.getItemId()) {
+
+            case R.id.menu_cancel:
+                finish();
+                break;
+
+            case R.id.menu_save:
+                save();
+                break;
+
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(i);
+    }
 }

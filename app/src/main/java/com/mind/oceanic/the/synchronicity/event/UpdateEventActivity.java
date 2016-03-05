@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -54,6 +56,9 @@ public class UpdateEventActivity extends Activity implements View.OnClickListene
     boolean ok = false;
 
     private EditText etDate;
+
+    private EditText etSummary;
+    private EditText etDetails;
     String entryDate = "";
     protected DatePickerDialog datePickerDialog;
     private SimpleDateFormat dateFormatter;
@@ -63,8 +68,6 @@ public class UpdateEventActivity extends Activity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        final EditText etSummary;
-        final EditText etDetails;
 
 
         super.onCreate(savedInstanceState);
@@ -103,65 +106,35 @@ public class UpdateEventActivity extends Activity implements View.OnClickListene
 
             etDate.setText(eventDate);
         }
-        Button btnSave = (Button) findViewById(R.id.btnSave);
-        btnSave.setOnClickListener(new View.OnClickListener() {
-                                       @Override
-                                       public void onClick(View v) {
-                                           Event event = new Event();
-                                           if (!newItem) {
-                                               event.setEventId(eventId);
-                                               event.setEventDate(eventDate);
-                                               event.setEventSummary(eventSummary);
-                                               event.setEventDetails(eventDetails);
-                                               event.setEventDate(eventDate);
-                                           }
-                                           event.setEventDate(etDate.getText().toString());
-                                           event.setEventSummary(etSummary.getText().toString());
-                                           event.setEventDetails(etDetails.getText().toString());
-                                           event.setEventDate(etDate.getText().toString());
-                                           Log.i("dolphiny", "setdetail=" + eventDetails);
-
-                                           if (newItem) {
-                                               Log.i("dolphinv", "saving new");
-                                               SaveNew(event);
-                                           } else {
-                                               Log.i("dolphinv", "saving existing");
-                                               SaveExisting(event);
-                                           }
-                                           finish();
-                                       }
-                                   }
-        );
-
-        Button btnNotes = (Button) findViewById(R.id.btn_notes);
-        btnNotes.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            Intent intent2 = new Intent(UpdateEventActivity.this, EventNotesActivity.class);
-//                        intent2.putExtra("Id", synchItem.getSynchId());
-
-                                            intent2.putExtra("Flag", "Reset");
-                                            Log.i("dolphin", "in click of note=");
-                                            intent2.putExtra("EventId", eventId);
-                                            noteId = -1;
-                                            intent2.putExtra("NoteId", noteId);
-                                            intent2.putExtra("NotePerson",notePerson);
-                                            startActivityForResult(intent2, 2);
-
-                                        }
-                                    }
-        );
-
-        Button btnCancel = (Button) findViewById(R.id.btnCancel);
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-                                         @Override
-                                         public void onClick(View v) {
-                                             Log.i("dolphin", "btnCancel");
-                                             finish();
-
-                                         }
-                                     }
-        );
+//        Button btnSave = (Button) findViewById(R.id.btnSave);
+//        btnSave.setOnClickListener(new View.OnClickListener() {
+//                                       @Override
+//                                       public void onClick(View v) {
+//                                           save();
+//                                       }
+//                                   }
+//        );
+//
+//        Button btnNotes = (Button) findViewById(R.id.btn_notes);
+//        btnNotes.setOnClickListener(new View.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(View v) {
+//                                            notes();
+//
+//                                        }
+//                                    }
+//        );
+//
+//        Button btnCancel = (Button) findViewById(R.id.btnCancel);
+//        btnCancel.setOnClickListener(new View.OnClickListener() {
+//                                         @Override
+//                                         public void onClick(View v) {
+//                                             Log.i("dolphin", "btnCancel");
+//                                             finish();
+//
+//                                         }
+//                                     }
+//        );
     }
 
     public void setNotesList() {
@@ -249,6 +222,43 @@ public class UpdateEventActivity extends Activity implements View.OnClickListene
         }
     }
 
+            protected void save(){
+                Event event = new Event();
+                if (!newItem) {
+                    event.setEventId(eventId);
+                    event.setEventDate(eventDate);
+                    event.setEventSummary(eventSummary);
+                    event.setEventDetails(eventDetails);
+                    event.setEventDate(eventDate);
+                }
+                event.setEventDate(etDate.getText().toString());
+                event.setEventSummary(etSummary.getText().toString());
+                event.setEventDetails(etDetails.getText().toString());
+                event.setEventDate(etDate.getText().toString());
+                Log.i("dolphiny", "setdetail=" + eventDetails);
+
+                if (newItem) {
+                    Log.i("dolphinv", "saving new");
+                    SaveNew(event);
+                } else {
+                    Log.i("dolphinv", "saving existing");
+                    SaveExisting(event);
+                }
+                finish();
+            }
+    protected void notes(){
+        Intent intent2 = new Intent(UpdateEventActivity.this, EventNotesActivity.class);
+//                        intent2.putExtra("Id", synchItem.getSynchId());
+
+        intent2.putExtra("Flag", "Reset");
+        Log.i("dolphin", "in click of note=");
+        intent2.putExtra("EventId", eventId);
+        noteId = -1;
+        intent2.putExtra("NoteId", noteId);
+        intent2.putExtra("NotePerson",notePerson);
+        startActivityForResult(intent2, 2);
+    }
+
     private void setDateTimeField() {
         etDate = (EditText) findViewById(R.id.txt_event_date);
 //        eventDate = (EditText) findViewById(R.id.txt_event_date);
@@ -316,4 +326,42 @@ public class UpdateEventActivity extends Activity implements View.OnClickListene
         setNotesList();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_event, menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem i) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = i.getItemId();
+
+        switch (i.getItemId()) {
+
+//            case R.id.action_settings:
+//                Intent intent = new Intent(this, HttpMainActivity.class);
+//                startActivity(intent);
+//                break;
+            case R.id.menu_cancel:
+                finish();
+                break;
+
+            case R.id.menu_reminder:
+                notes();
+                break;
+
+            case R.id.menu_save:
+                save();
+                break;
+
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(i);
+    }
 }

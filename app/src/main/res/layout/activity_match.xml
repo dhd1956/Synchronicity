@@ -32,39 +32,39 @@
         android:layout_below="@+id/lbl_left_event_details"
         />
 
-    <Button
-        android:layout_width="80dp"
-        android:layout_height="40dp"
-        android:text="Ignore"
-        android:id="@+id/btn_ignore"
-        android:layout_below="@+id/lbl_right_event_details"
-        android:layout_alignParentLeft="true" />
+    <!--<Button-->
+        <!--android:layout_width="80dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:text="Ignore"-->
+        <!--android:id="@+id/btn_ignore"-->
+        <!--android:layout_below="@+id/lbl_right_event_details"-->
+        <!--android:layout_alignParentLeft="true" />-->
 
-    <Button
-        android:layout_width="80dp"
-        android:layout_height="40dp"
-        android:text="Match"
-        android:id="@+id/btn_match"
-        android:layout_below="@+id/lbl_right_event_details"
-        android:layout_toRightOf="@+id/btn_ignore" />
+    <!--<Button-->
+        <!--android:layout_width="80dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:text="Match"-->
+        <!--android:id="@+id/btn_match"-->
+        <!--android:layout_below="@+id/lbl_right_event_details"-->
+        <!--android:layout_toRightOf="@+id/btn_ignore" />-->
 
-    <Button
-        android:layout_width="80dp"
-        android:layout_height="40dp"
-        android:text="Pass"
-        android:id="@+id/btn_pass"
-        android:layout_below="@+id/lbl_right_event_details"
-        android:layout_toRightOf="@+id/btn_match"
-        />
+    <!--<Button-->
+        <!--android:layout_width="80dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:text="Pass"-->
+        <!--android:id="@+id/btn_pass"-->
+        <!--android:layout_below="@+id/lbl_right_event_details"-->
+        <!--android:layout_toRightOf="@+id/btn_match"-->
+        <!--/>-->
 
-    <Button
-        android:layout_width="80dp"
-        android:layout_height="40dp"
-        android:text="Return"
-        android:id="@+id/btn_return"
-        android:layout_below="@+id/lbl_right_event_details"
-        android:layout_toRightOf="@+id/btn_pass"
-        />
+    <!--<Button-->
+        <!--android:layout_width="80dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:text="Return"-->
+        <!--android:id="@+id/btn_return"-->
+        <!--android:layout_below="@+id/lbl_right_event_details"-->
+        <!--android:layout_toRightOf="@+id/btn_pass"-->
+        <!--/>-->
 
 
     <ScrollView

@@ -1,10 +1,30 @@
 <resources>
     <string name="app_name">Synchronicity</string>
-
     <string name="lbl_activity">Activity</string>
     <string name="action_settings">Settings</string>
     <string name="lbl_event_date">Event Date</string>
-    <string name="lbl_event_title">Event Title</string>string>
+    <string name="lbl_event_title">Event Title</string>
     <string name="lbl_event_location">Event Location</string>
     <string name="lbl_event_description">Description</string>
+    <string name="menu_maintain_synchronicity">Maintain Synchronicity</string>
+    <string name="menu_maintain_events">Maintain Events</string>
+    <string name="menu_match_events">Match Synchronistic Events</string>
+    <string name="menu_record_event">Record Event</string>
+    <string name="menu_return">Return</string>
+    <string name="menu_event">Events</string>
+    <string name="menu_cancel">Cancel</string>
+    <string name="menu_save">Save</string>
+    <string name="menu_action">Create Action</string>
+    <string name="menu_item">Create Item</string>
+    <string name="menu_contacts">Assign Contacts</string>
+    <string name="menu_calendar">Create Calendar Event</string>
+    <string name="menu_reminder">Reminders</string>
+    <string name="menu_new_synch">New Synchronistic Connection</string>
+    <string name="menu_link_event">Link Life Event</string>
+    <string name="menu_new_event">New Life Event</string>
+    <string name="menu_add_to_calendar">Add To Calendar</string>
+    <string name="menu_ignore">Ignore From Now On</string>
+    <string name="menu_match">Match These Events</string>
+    <string name="menu_pass">Skip</string>
+
 </resources>

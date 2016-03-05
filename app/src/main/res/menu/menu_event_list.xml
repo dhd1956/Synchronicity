@@ -13,30 +13,15 @@
     </ListView>
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/menu_record_event"
         android:orderInCategory="100"
         app:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:title="@string/menu_record_event"/>
 
     <item
-        android:id="@+id/menu_maintain_synchronicity"
-        android:orderInCategory="101"
-        app:showAsAction="ifRoom"
-        android:title="@string/menu_maintain_synchronicity">
-    </item>
-
-    <item
-        android:id="@+id/menu_maintain_events"
-        android:orderInCategory="102"
-        app:showAsAction="ifRoom"
-        android:title="@string/menu_maintain_events">
-    </item>
-
-    <item
-        android:id="@+id/menu_match_events"
+        android:id="@+id/menu_return"
         android:orderInCategory="104"
         app:showAsAction="always"
-        android:title="@string/menu_match_events">
-    </item>
+        android:title="@string/menu_return"/>
 
 </menu>

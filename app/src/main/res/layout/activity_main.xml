@@ -5,31 +5,43 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Maintain Synchronicity"
-        android:id="@+id/btn_goto_synch"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Match Synchronicity"
-        android:id="@+id/btn_goto_match"
-        android:layout_below="@+id/btn_goto_synch"
-        android:layout_centerHorizontal="true"
- />
+        Welcome to the Synchronicity Tracker. The term synchronicity was coined by Carl Jung. He applied it to events are considered 'meaningful coincidences' where there is no
+        apparent causal relationship but they seemed to be meaningfully related.
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Maintain Events"
-        android:id="@+id/btn_goto_event"
-        android:layout_below="@+id/btn_goto_match"
-        android:layout_centerHorizontal="true"
+        This app is intended to allow the tracking of events, provides methods to look for synchronicity. It is a time machine in that you
+        can set the date forwwards or backwards and 'connect the dots' at any time"
         />
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Maintain Synchronicity"-->
+        <!--android:id="@+id/btn_goto_synch"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_centerHorizontal="true" />-->
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Match Synchronicity"-->
+        <!--android:id="@+id/btn_goto_match"-->
+        <!--android:layout_below="@+id/btn_goto_synch"-->
+        <!--android:layout_centerHorizontal="true"-->
+ <!--/>-->
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Maintain Events"-->
+        <!--android:id="@+id/btn_goto_event"-->
+        <!--android:layout_below="@+id/btn_goto_match"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--/>-->
 
 
 
