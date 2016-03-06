@@ -112,6 +112,9 @@ import java.util.ArrayList;
         }
 
         public SynchItem create(SynchItem synchItem) {
+            synchItem.setSynchSummary(synchItem.getSynchSummary().replaceAll("'", "\''"));
+            synchItem.setSynchDetails(synchItem.getSynchDetails().replaceAll("'", "\''"));
+
             ContentValues values = new ContentValues();
                 values.put(SynchronicityDBOpenHelper.COLUMN_SYNCH_DATE, synchItem.getSynchDate());
                 values.put(SynchronicityDBOpenHelper.COLUMN_SYNCH_SUMMARY, synchItem.getSynchSummary());
@@ -140,6 +143,9 @@ import java.util.ArrayList;
 
         public Event create(Event event) {
             Log.i("dolphinv", "TOP OF CREATE EVENT");
+            event.setEventSummary(event.getEventSummary().replaceAll("'", "\''"));
+            event.setEventDetails(event.getEventDetails().replaceAll("'", "\''"));
+
             if (event.getEventDetails() == null) {
                 Log.i("dolphinv", "null synch item");
             } else {
@@ -155,6 +161,9 @@ import java.util.ArrayList;
 
         public Verb create(Verb verb) {
             Log.i("dolphinv", "TOP OF CREATE VErB");
+            verb.setVerbName(verb.getVerbName().replaceAll("'", "\''"));
+            verb.setVerbAppliesTo(verb.getVerbAppliesTo().replaceAll("'", "\''"));
+
             if (verb.getVerbName() == null) {
                 Log.i("dolphinv", "null verb item");
             } else {
@@ -170,6 +179,9 @@ import java.util.ArrayList;
 
         public Thing create(Thing thing) {
             Log.i("dolphinv", "TOP OF CREATE VErB");
+            thing.setThingName(thing.getThingName().replaceAll("'", "\''"));
+            thing.setThingUse(thing.getThingUse().replaceAll("'", "\''"));
+
             if (thing.getThingName() == null) {
                 Log.i("dolphinv", "null verb item");
             } else {
@@ -184,6 +196,9 @@ import java.util.ArrayList;
 
         public Note create(Note note) {
             Log.i("dolphinv", "TOP OF CREATE NOTE");
+            note.setNotePerson(note.getNotePerson().replaceAll("'", "\''"));
+            note.setNoteInfo(note.getNoteInfo().replaceAll("'", "\''"));
+
             if (note.getNoteInfo() == null) {
                 Log.i("dolphinv", "null verb item");
             } else {
@@ -198,6 +213,9 @@ import java.util.ArrayList;
         }
 
         public boolean update(SynchItem synchItem) {
+            synchItem.setSynchSummary(synchItem.getSynchSummary().replaceAll("'", "\''"));
+            synchItem.setSynchDetails(synchItem.getSynchDetails().replaceAll("'", "\''"));
+
             String sqlCmd = "update " + SynchronicityDBOpenHelper.TABLE_SYNCH_ITEMS + " Set " + SynchronicityDBOpenHelper.COLUMN_SYNCH_DATE + " = '" + synchItem.getSynchDate() + "', " + SynchronicityDBOpenHelper.COLUMN_SYNCH_SUMMARY + " = '" + synchItem.getSynchSummary() + "', " + SynchronicityDBOpenHelper.COLUMN_SYNCH_DETAILS + " = '" + synchItem.getSynchDetails() + "' where " + SynchronicityDBOpenHelper.COLUMN_SYNCH_ID + " = " + synchItem.getSynchId() + ";";
             Log.i("dolphiny", "update sql=" + sqlCmd);
             open();
@@ -207,6 +225,9 @@ import java.util.ArrayList;
         }
 
         public boolean update(Event event) {
+            event.setEventSummary(event.getEventSummary().replaceAll("'", "\''"));
+            event.setEventDetails(event.getEventDetails().replaceAll("'", "\''"));
+
             String sqlCmd = "update " + SynchronicityDBOpenHelper.TABLE_EVENTS + " Set " + SynchronicityDBOpenHelper.COLUMN_EVENT_DATE + " = '" + event.getEventDate() + "', " + SynchronicityDBOpenHelper.COLUMN_EVENT_SUMMARY + " = '" + event.getEventSummary() + "', " + SynchronicityDBOpenHelper.COLUMN_EVENT_DETAILS + " = '" + event.getEventDetails() + "' where " + SynchronicityDBOpenHelper.COLUMN_EVENT_ID + " = " + event.getEventId() + ";";
             Log.i("dolphiny", "update sql=" + sqlCmd);
             open();
@@ -216,6 +237,9 @@ import java.util.ArrayList;
         }
 
         public boolean update(Verb verb) {
+            verb.setVerbName(verb.getVerbName().replaceAll("'", "\''"));
+            verb.setVerbAppliesTo(verb.getVerbAppliesTo().replaceAll("'", "\''"));
+
             String sqlCmd = "update " + SynchronicityDBOpenHelper.TABLE_VERBS + " Set " + SynchronicityDBOpenHelper.COLUMN_VERB_NAME + " = '" + verb.getVerbName()  + SynchronicityDBOpenHelper.COLUMN_VERB_APPLIES_TO + " = '" + verb.getVerbAppliesTo()  + "' where " + SynchronicityDBOpenHelper.COLUMN_VERB_ID + " = " + verb.getVerbId() + ";";
             Log.i("dolphiny", "update sql=" + sqlCmd);
             open();
@@ -225,6 +249,9 @@ import java.util.ArrayList;
         }
 
         public boolean update(Thing thing) {
+            thing.setThingName(thing.getThingName().replaceAll("'", "\''"));
+            thing.setThingUse(thing.getThingUse().replaceAll("'", "\''"));
+
             String sqlCmd = "update " + SynchronicityDBOpenHelper.TABLE_THINGS + " Set " + SynchronicityDBOpenHelper.COLUMN_THING_NAME + " = '" + thing.getThingName()  + "' where " + SynchronicityDBOpenHelper.COLUMN_THING_ID + " = " + thing.getThingId() + ";";
             Log.i("dolphiny", "update sql=" + sqlCmd);
             open();
@@ -591,6 +618,7 @@ import java.util.ArrayList;
         }
 
         private List<Note> noteCursorToList(Cursor cursor) {
+
             List<Note> notes = new ArrayList<Note>();
             if (cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
@@ -637,6 +665,7 @@ import java.util.ArrayList;
             }
             return events;
         }
+
         private List<Ignore> ignoreCursorToList(Cursor cursor) {
             List<Ignore> ignores = new ArrayList<Ignore>();
             if (cursor.getCount() > 0) {
@@ -697,6 +726,9 @@ import java.util.ArrayList;
 
         public long add(Verb verb) {
             Log.i("dolphino", "top of addProduct nameB= ");
+
+            verb.setVerbName(verb.getVerbName().replaceAll("'", "\''"));
+
             open();
             ContentValues values = new ContentValues();
             values.put(SynchronicityDBOpenHelper.COLUMN_EVENT_ID, verb.getVerbId());
