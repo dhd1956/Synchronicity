@@ -323,6 +323,7 @@ public class EventNotesActivity extends Activity {
         Intent intent4 = new Intent(EventNotesActivity.this, ThingActivity.class);
         thingId = -1;
         intent4.putExtra("ThingId", thingId);
+        intent4.putExtra("ThingName",thingName);
         Log.i("dolphin","btnThing click");
         startActivityForResult(intent4, 4);
     }

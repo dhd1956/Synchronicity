@@ -41,10 +41,9 @@ public class ThingActivity extends Activity  {
         datasource = new SynchronicityDataSource(this);
         datasource.open();
 
-        Log.i("dolphin", "top of thingActivity");
         Bundle b = getIntent().getExtras();
         thingId = b.getLong("ThingId");
-        thingName = b.getString("ThingName");
+//        thingName = b.getString("ThingName");
 
         txtThingName = (EditText) findViewById(R.id.txt_thing_name);
 //        btnCancel = (Button) findViewById(R.id.btn_cancel);
@@ -53,29 +52,30 @@ public class ThingActivity extends Activity  {
 
         Thing thing = new Thing();
         if (thingId != -1) {
+            Log.i("dolphin","set thing name to thingName="+thingName);
             thing.setThingId(thingId);
             thing.setThingName(thingName);
-            Log.i("dolphin","set thing name to thingName="+thingName);
         }
         txtThingName.setText(thingName);
+        Log.i("dolphin", "top of thingActivity");
 
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-                                         @Override
-                                         public void onClick(View v) {
-                                             finish();
-                                         }
-                                     }
-        );
-
-        btnSave.setOnClickListener(new View.OnClickListener() {
-                                       @Override
-                                       public void onClick(View v) {
-                                            save();
-
-                                       }
-                                   }
-        );
+//        btnCancel.setOnClickListener(new View.OnClickListener() {
+//                                         @Override
+//                                         public void onClick(View v) {
+//                                             finish();
+//                                         }
+//                                     }
+//        );
+//
+//        btnSave.setOnClickListener(new View.OnClickListener() {
+//                                       @Override
+//                                       public void onClick(View v) {
+//                                            save();
+//
+//                                       }
+//                                   }
+//        );
 
     }
     @Override

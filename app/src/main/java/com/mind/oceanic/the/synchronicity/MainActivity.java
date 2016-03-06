@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.mind.oceanic.the.synchronicity.db.SynchronicityDataSource;
 import com.mind.oceanic.the.synchronicity.event.EventListActivity;
@@ -18,6 +20,8 @@ import com.mind.oceanic.the.synchronicity.model.Event;
 import com.mind.oceanic.the.synchronicity.synch.MaintainSynchronicityActivity;
 import com.mind.oceanic.the.synchronicity.synch.SynchListActivity;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 /**
@@ -25,7 +29,10 @@ import java.util.List;
  */
 public class MainActivity extends Activity {
 
-
+    TextView tvIntro;
+    TextView tvContents1;
+    TextView tvContents2;
+    TextView tvContents3;
 
 
     @Override
@@ -33,9 +40,16 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//Log.i("dolphin","matching");
-//        setButtons();
+        tvIntro = (TextView) findViewById(R.id.tv_intro);
+        tvContents1 = (TextView) findViewById(R.id.tv_contents1);
+        tvContents2 = (TextView) findViewById(R.id.tv_contents2);
+        tvContents3 = (TextView) findViewById(R.id.tv_contents3);
 
+        tvIntro.setText(Html.fromHtml("<h2><u>Synchronicity Tracker</u></h2><p><p><br>Welcome to the Synchronicity Tracker. The term synchronicity was coined by Carl Jung. He applied it to events that are considered 'meaningful coincidences'. Events where there is no apparent causal relationship but they seem to be meaningfully related.<br></p> <p>This app is intended to facilitate the tracking of events and assistance in discovering synchronicity.<br> It is a bit of a time machine in that you can set the date forward or backward and 'connect the dots' between events at any time"));
+
+        tvContents1.setText(Html.fromHtml("<u>Maintain Synchronicity</> - used when you have a synchronistic event in mind and you want to record it and associated events."));
+        tvContents2.setText(Html.fromHtml("<br><u>Maintain Events</> - used to log events that may or may not appear synchronistic. They can be linked at a later date if applicable."));
+        tvContents3.setText(Html.fromHtml("<br><u>Match Synchronistic Events</> - used to compare events. Keywords are matched and if not significant can be marked to be ignored."));
 
     }
 //    private void setButtons() {

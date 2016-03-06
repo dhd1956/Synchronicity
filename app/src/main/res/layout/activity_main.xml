@@ -7,15 +7,26 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_intro"    />
 
-        Welcome to the Synchronicity Tracker. The term synchronicity was coined by Carl Jung. He applied it to events are considered 'meaningful coincidences' where there is no
-        apparent causal relationship but they seemed to be meaningfully related.
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_intro"
+        android:id="@+id/tv_contents1" />
 
-        This app is intended to allow the tracking of events, provides methods to look for synchronicity. It is a time machine in that you
-        can set the date forwwards or backwards and 'connect the dots' at any time"
-        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_contents1"
+        android:id="@+id/tv_contents2" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_contents2"
+        android:id="@+id/tv_contents3" />
 
     <!--<Button-->
         <!--android:layout_width="wrap_content"-->

@@ -231,6 +231,22 @@ import java.util.Locale;
             }
         });
     }
+
+    protected void recordEvent() {
+        Intent intent2 = new Intent(EventListActivity.this, UpdateEventActivity.class);
+        eventId = -1;
+        eventSummary = null;
+        eventDetails = null;
+        eventDate = null;
+        intent2.putExtra("EventId", eventId);
+        intent2.putExtra("EventSummary", eventSummary);
+        intent2.putExtra("EventDetails", eventDetails);
+        intent2.putExtra("EventDate", eventDate);
+        intent2.putExtra("EventSource", "EventList");
+        startActivityForResult(intent2, 2);
+    }
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -294,9 +310,10 @@ import java.util.Locale;
 //                startActivity(intent);
 //                break;
             case R.id.menu_record_event:
-                Intent intent5 = new Intent(EventListActivity.this, UpdateEventActivity.class);
-                intent5.putExtra("EventSource", "EventList");
-                startActivityForResult(intent5, 5);
+                recordEvent();
+//                Intent intent5 = new Intent(EventListActivity.this, UpdateEventActivity.class);
+//                intent5.putExtra("EventSource", "EventList");
+//                startActivityForResult(intent5, 5);
                 break;
 
             case R.id.menu_return:

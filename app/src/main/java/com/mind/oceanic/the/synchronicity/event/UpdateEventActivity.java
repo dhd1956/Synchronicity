@@ -81,14 +81,13 @@ public class UpdateEventActivity extends Activity implements View.OnClickListene
 
         datasource = new SynchronicityDataSource(this);
         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-        Log.i("dolphin", "eeeeeeeeeeeeeeeeventid=" + eventId);
         Bundle b = getIntent().getExtras();
         synchId = b.getLong("SynchId");
         eventId = b.getLong("EventId");
         if (eventId == -1) {
+            Log.i("dolphin", "eeeeeeeeeeeeeeeeventid=" + eventId);
             newItem = true;
         }
-        setDateTimeField();
         eventSummary = b.getString("EventSummary");
         eventDetails = b.getString("EventDetails");
         eventDate = b.getString("EventDate");
@@ -99,12 +98,12 @@ public class UpdateEventActivity extends Activity implements View.OnClickListene
         etSummary = (EditText) findViewById(R.id.txt_event_summary);
         etDetails = (EditText) findViewById(R.id.txt_event_details);
         etDate = (EditText) findViewById(R.id.txt_event_date);
+        setDateTimeField();
         if (!newItem) {
             etSummary.setText(eventSummary);
-
             etDetails.setText(eventDetails);
-
-            etDate.setText(eventDate);
+            Log.i("dolphin","date is eventDate="+eventDate);
+//            etDate.setText(eventDate);
         }
 //        Button btnSave = (Button) findViewById(R.id.btnSave);
 //        btnSave.setOnClickListener(new View.OnClickListener() {
@@ -222,7 +221,7 @@ public class UpdateEventActivity extends Activity implements View.OnClickListene
         }
     }
 
-            protected void save(){
+            protected void save() {
                 Event event = new Event();
                 if (!newItem) {
                     event.setEventId(eventId);
@@ -235,6 +234,7 @@ public class UpdateEventActivity extends Activity implements View.OnClickListene
                 event.setEventSummary(etSummary.getText().toString());
                 event.setEventDetails(etDetails.getText().toString());
                 event.setEventDate(etDate.getText().toString());
+                Log.i("dolphiny", "setsummary=" + eventSummary);
                 Log.i("dolphiny", "setdetail=" + eventDetails);
 
                 if (newItem) {
@@ -260,7 +260,7 @@ public class UpdateEventActivity extends Activity implements View.OnClickListene
     }
 
     private void setDateTimeField() {
-        etDate = (EditText) findViewById(R.id.txt_event_date);
+//        etDate = (EditText) findViewById(R.id.txt_event_date);
 //        eventDate = (EditText) findViewById(R.id.txt_event_date);
 //        etDate.setInputType(InputType.TYPE_NULL);
         etDate.requestFocus();
@@ -271,7 +271,18 @@ public class UpdateEventActivity extends Activity implements View.OnClickListene
 
         entryDate = df.format(c.getTime());
 
-        etDate.setText(entryDate);
+
+        if (eventDate != null && eventDate.length()>3) {
+            Log.i("dolphin","synchDate is in date setting as "+eventDate);
+            etDate.setText(eventDate);
+        } else {
+            Log.i("dolphin","entryDate is in date setting as "+entryDate);
+            etDate.setText(entryDate);
+        }
+
+
+
+//        etDate.setText(entryDate);
         Calendar newCalendar = Calendar.getInstance();
         datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
 
@@ -287,9 +298,7 @@ public class UpdateEventActivity extends Activity implements View.OnClickListene
 
     public void onClick(View view) {
         if (view == etDate) {
-
             datePickerDialog.show();
-
         }
     }
 
