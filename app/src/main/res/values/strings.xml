@@ -26,5 +26,6 @@
     <string name="menu_ignore">Ignore From Now On</string>
     <string name="menu_match">Match These Events</string>
     <string name="menu_pass">Skip</string>
+    <string name="menu_create_reminders">Create Outstanding Reminders</string>
 
 </resources>

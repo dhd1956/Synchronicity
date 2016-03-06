@@ -165,6 +165,7 @@ public class EventNotesActivity extends Activity {
             Log.i("dolphin", "save Existing eventId=" + eventId+"  and "+note.getFkEventId());
             saveExisting(note);
         }
+        finish();
     }
 
     public void setVerbList() {
@@ -315,7 +316,7 @@ public class EventNotesActivity extends Activity {
         Intent intent1 = new Intent(EventNotesActivity.this, VerbActivity.class);
         verbId = -1;
         intent1.putExtra("VerbId", verbId);
-        Log.i("dolphin","btnVerb click");
+        Log.i("dolphin", "btnVerb click");
         startActivityForResult(intent1, 3);
     }
 
@@ -329,13 +330,12 @@ public class EventNotesActivity extends Activity {
     }
 
     protected void save() {
-        if (!person.equals("")) {
-            if (okCancelReminderAlert()) {
-            } else {
-                setToSave();
-            }
-        }
+//        if (!person.equals("")) {
+            setToSave();
+            finish();
+//        }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -402,34 +402,34 @@ public class EventNotesActivity extends Activity {
     return ok;
 }
 
-    protected boolean okCancelReminderAlert(){
-
-        AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(EventNotesActivity.this);
-        myAlertDialog.setTitle("Reminders");
-        myAlertDialog.setMessage("Press Ok to create any outstanding reminders");
-        myAlertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface arg0, int arg1) {
-                // do something when the OK button is clicked
-                Log.i("dolphin","before check");
-                checkForActionRequired(person);
-                setToSave();
-                Log.i("dolphin", "after check");
-                ok = true;
-            }
-        });
-        myAlertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface arg0, int arg1) {
-                // do something when the Cancel button is clicked
-                setToSave();
-
-                ok = false;
-            }
-        });
-        myAlertDialog.show();
-        return ok;
-    }
+//    protected boolean okCancelReminderAlert(){
+//
+//        AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(EventNotesActivity.this);
+//        myAlertDialog.setTitle("Reminders");
+//        myAlertDialog.setMessage("Press Ok to create any outstanding reminders");
+//        myAlertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//
+//            public void onClick(DialogInterface arg0, int arg1) {
+//                // do something when the OK button is clicked
+//                Log.i("dolphin","before check");
+//                checkForActionRequired(person);
+//                setToSave();
+//                Log.i("dolphin", "after check");
+//                ok = true;
+//            }
+//        });
+//        myAlertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//
+//            public void onClick(DialogInterface arg0, int arg1) {
+//                // do something when the Cancel button is clicked
+//                setToSave();
+//
+//                ok = false;
+//            }
+//        });
+//        myAlertDialog.show();
+//        return ok;
+//    }
 
     protected void saveNew(Note note) {
         Log.i("dolphinv", "Item added  saveNew fk=" + note.getFkEventId());
@@ -614,6 +614,10 @@ public class EventNotesActivity extends Activity {
 
             case R.id.menu_contacts:
                 getContacts();
+                break;
+
+            case R.id.menu_create_reminders:
+                checkForActionRequired(person);
                 break;
 
             case R.id.menu_calendar:

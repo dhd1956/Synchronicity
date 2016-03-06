@@ -196,6 +196,7 @@ import java.util.ArrayList;
 
         public Note create(Note note) {
             Log.i("dolphinv", "TOP OF CREATE NOTE");
+
             note.setNotePerson(note.getNotePerson().replaceAll("'", "\''"));
             note.setNoteInfo(note.getNoteInfo().replaceAll("'", "\''"));
 
@@ -261,6 +262,9 @@ import java.util.ArrayList;
         }
 
         public boolean update(Note note) {
+            note.setNotePerson(note.getNotePerson().replaceAll("'", "\''"));
+            note.setNoteInfo(note.getNoteInfo().replaceAll("'", "\''"));
+
             String sqlCmd = "update " + SynchronicityDBOpenHelper.TABLE_NOTES + " Set " + SynchronicityDBOpenHelper.COLUMN_NOTE_PERSON + " = '" + note.getNotePerson()  + "', " + SynchronicityDBOpenHelper.COLUMN_NOTE_INFO + " = '" + note.getNoteInfo()  + "' where " + SynchronicityDBOpenHelper.COLUMN_NOTE_ID + " = " + note.getNoteId() + ";";
             Log.i("dolphiny", "update sql=" + sqlCmd);
             open();
@@ -406,8 +410,10 @@ import java.util.ArrayList;
 
 //            Cursor cursor = database.query(SynchronicityDBOpenHelper.TABLE_SYNCH_ITEM_EVENTS, allSynchItemColumns,
 //                    null, null, null, null, null);
+            person = person.replaceAll("'", "\''");
             String sqlCmd="select noteId, eventDate, notePerson, noteInfo from notes left join events ON eventId  =  fkEventId " +
                     "where notePerson = '"+person+"';";
+
             Log.i("dolphin", "sql for person notes is="+sqlCmd);
             open();
             Cursor cursor = database.rawQuery(sqlCmd,null);
